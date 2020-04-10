@@ -18,6 +18,10 @@ export const Auth = styled.div`
   align-items: center;
   justify-content: center;
 
+  img {
+    margin-bottom: 40px;
+  }
+
   h3 {
     font-size: 28px;
     margin-bottom: 30px;
@@ -54,8 +58,13 @@ export const Auth = styled.div`
     span {
       font-size: 13px;
       margin: 8px 0 30px auto;
-      color: #f2b5c0;
+      color: #e9a0ad;
       cursor: pointer;
+      opacity: 0.8;
+
+      &:hover {
+        opacity: 1;
+      }
     }
 
     button {

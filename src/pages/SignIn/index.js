@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-// import logo from '~/assets/logo.svg';
+import logo from '~/assets/petlost.svg';
 
 export default function SignIn() {
   return (
     <>
-      {/* <img src={logo} alt="GoBarber" /> */}
+      <img src={logo} alt="PetLost" />
 
       <form>
         <h3>Log into your account</h3>
