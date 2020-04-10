@@ -59,7 +59,7 @@ export const Auth = styled.div`
 
     span {
       font-size: 13px;
-      margin: 8px 0 30px auto;
+      margin: 8px 0 0 auto;
       color: #e9a0ad;
       cursor: pointer;
       opacity: 0.8;
@@ -78,6 +78,7 @@ export const Auth = styled.div`
       font-size: 16px;
       font-weight: bold;
       height: 46px;
+      margin-top: 40px;
 
       &:hover {
         background: ${darken(0.03, '#E41320')};
