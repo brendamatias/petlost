@@ -8,7 +8,7 @@ export default function AuthLayout({ children }) {
     <Wrapper>
       <Content>
         <Auth>{children}</Auth>
-        <Right>teste</Right>
+        <Right />
       </Content>
     </Wrapper>
   );

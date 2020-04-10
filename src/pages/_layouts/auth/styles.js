@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { darken } from 'polished';
 
+import home from '~/assets/home.jpg';
+
 export const Wrapper = styled.div`
   height: 100%;
 `;
@@ -104,5 +106,9 @@ export const Auth = styled.div`
 `;
 
 export const Right = styled.div`
-  background: linear-gradient(-90deg, #e41320, #e41320);
+  background-image: url(${home});
+  background-blend-mode: darken;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 `;
