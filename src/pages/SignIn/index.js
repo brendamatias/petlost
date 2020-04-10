@@ -1,17 +1,27 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Form, Input } from '@rocketseat/unform';
+import * as Yup from 'yup';
 
 import logo from '~/assets/petlost.svg';
 
+const schema = Yup.object().shape({
+  email: Yup.string()
+    .email('Enter a valid email.')
+    .required('Email is required.'),
+  password: Yup.string().required('Password is required.'),
+});
+
 export default function SignIn() {
-  function handleSubmit(data) {}
+  function handleSubmit(data) {
+    console.tron.log(data);
+  }
 
   return (
     <>
       <img src={logo} alt="PetLost" />
 
-      <Form onSubmit={handleSubmit}>
+      <Form schema={schema} onSubmit={handleSubmit}>
         <h3>Log into your account</h3>
 
         <label htmlFor="email">Email Address</label>
@@ -24,7 +34,7 @@ export default function SignIn() {
           placeholder="••••••••"
           className="password"
         />
-        <span>Forgot Password?</span>
+        <h5>Forgot Password?</h5>
 
         <button type="submit">Log in</button>
         <Link to="/register">Dont have an account? Create an account</Link>

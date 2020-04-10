@@ -58,6 +58,12 @@ export const Auth = styled.div`
     }
 
     span {
+      margin-top: 10px;
+      font-weight: bold;
+      color: #e41320;
+    }
+
+    h5 {
       font-size: 13px;
       margin: 8px 0 0 auto;
       color: #e9a0ad;
