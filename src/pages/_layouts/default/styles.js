@@ -5,5 +5,9 @@ export const Wrapper = styled.div`
 
   display: grid;
   grid-template-columns: 0.2fr 1fr;
-  background: #fbf6f8;
+`;
+
+export const Content = styled.div`
+  background: #f7f6fb;
+  padding: 60px 80px;
 `;
