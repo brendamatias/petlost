@@ -38,4 +38,8 @@ export default createGlobalStyle`
   button {
     cursor: pointer;
   }
+
+  img {
+    -webkit-user-drag: none
+  }
 `;

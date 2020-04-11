@@ -53,8 +53,10 @@ export const Scroll = styled(PerfectScrollbar)`
 `;
 
 export const Preview = styled.div`
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 50px 2fr 0.5fr;
+  gap: 20px;
+
   margin-bottom: 20px;
   background: #fff;
   padding: 20px;
@@ -67,5 +69,29 @@ export const Preview = styled.div`
 
   span {
     color: #8e919b;
+  }
+
+  div:last-child {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  h5 {
+    float: right;
+    color: rgba(0, 0, 0, 0.4);
+  }
+
+  .notification {
+    display: flex;
+    align-items: center !important;
+    margin-top: 10px;
+    justify-content: center;
+    color: #fff;
+    font-size: 11px;
+    background: #e41320;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
   }
 `;

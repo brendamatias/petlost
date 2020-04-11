@@ -28,6 +28,7 @@ export default function Messages() {
               </div>
               <div>
                 <h5>02 Fev</h5>
+                <div className="notification">1</div>
               </div>
             </Preview>
             <Preview>
@@ -41,6 +42,7 @@ export default function Messages() {
               </div>
               <div>
                 <h5>02 Fev</h5>
+                <div className="notification">5</div>
               </div>
             </Preview>
             <Preview>
@@ -54,6 +56,7 @@ export default function Messages() {
               </div>
               <div>
                 <h5>02 Fev</h5>
+                <div className="notification">2</div>
               </div>
             </Preview>
             <Preview>
