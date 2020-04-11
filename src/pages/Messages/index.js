@@ -1,18 +1,9 @@
 import React from 'react';
 import { MdSearch } from 'react-icons/md';
-import {
-  Container,
-  Content,
-  List,
-  Search,
-  Scroll,
-  Preview,
-  Chat,
-  Info,
-  ChatContent,
-  UserMessage,
-  NewMessage,
-} from './styles';
+
+import { Container, Content, List, Search, Scroll, Preview } from './styles';
+
+import Chat from './Chat';
 
 export default function Messages() {
   return (
@@ -132,44 +123,7 @@ export default function Messages() {
             </Preview>
           </Scroll>
         </List>
-        <Chat>
-          <Info>
-            <strong>Pet Bolinha</strong>
-            <span>From: User Test</span>
-          </Info>
-          <ChatContent>
-            <Scroll>
-              <UserMessage>
-                <div>
-                  <img
-                    src="https://api.adorable.io/avatars/60/abott@adorable.png"
-                    alt="Perfil"
-                  />
-                  <span>10:05</span>
-                </div>
-                <div>
-                  <p>Olá, tudo bem?</p>
-                </div>
-              </UserMessage>
-              <UserMessage>
-                <div>
-                  <img
-                    src="https://api.adorable.io/avatars/60/abott@adorable.png"
-                    alt="Perfil"
-                  />
-                  <span>10:05</span>
-                </div>
-                <div>
-                  <p>O cachorrinho que postou é meu!</p>
-                </div>
-              </UserMessage>
-            </Scroll>
-
-            <NewMessage>
-              <input type="text" placeholder="Type a message..." />
-            </NewMessage>
-          </ChatContent>
-        </Chat>
+        <Chat />
       </Content>
     </Container>
   );

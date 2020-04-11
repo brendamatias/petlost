@@ -39,6 +39,7 @@ export const Search = styled.div`
     padding: 15px;
     font-size: 16px;
     margin-left: 6px;
+    color: #464e59;
 
     &::placeholder {
       color: #abaeb9;
@@ -66,68 +67,5 @@ export const Preview = styled.div`
 
   span {
     color: #8e919b;
-  }
-`;
-
-export const Chat = styled.div``;
-
-export const Info = styled.div`
-  padding-bottom: 20px;
-  margin-bottom: 20px;
-  border-bottom: 1px solid #d9dce4;
-
-  strong {
-    font-size: 18px;
-    display: block;
-    color: #464e59;
-  }
-
-  span {
-    font-size: 13px;
-    color: #9d9ca1;
-    font-weight: bold;
-  }
-`;
-
-export const ChatContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-`;
-
-export const UserMessage = styled.div`
-  display: flex;
-  margin-bottom: 40px;
-
-  div:first-child {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-
-    span {
-      font-size: 12px;
-      margin-top: 4px;
-    }
-  }
-
-  p {
-    margin-left: 18px;
-    background: #e9e8ed;
-    padding: 15px 20px;
-    border-radius: 25px;
-    color: #464e59;
-    font-weight: 600;
-  }
-`;
-
-export const NewMessage = styled.div`
-  background: #fff;
-  padding: 15px 20px;
-  border-radius: 4px;
-
-  input {
-    border: 0;
-    background: none;
-    padding: 10px;
   }
 `;
