@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  background: #e41320;
+  background: linear-gradient(645deg, #de2732, #bb2929);
+  /* background: #e41320; */
   padding: 60px 40px;
   display: flex;
   flex-direction: column;
@@ -10,24 +11,24 @@ export const Container = styled.div`
   ul {
     li {
       padding: 24px 0;
+    }
+  }
 
-      a {
-        display: flex;
-        align-items: center;
-        color: #fff;
-        font-size: 16px;
-        font-weight: 600;
-        transition: opacity 0.2s;
-        opacity: 0.7;
+  a {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    transition: opacity 0.2s;
+    opacity: 0.7;
 
-        &:hover {
-          opacity: 1;
-        }
+    &:hover {
+      opacity: 1;
+    }
 
-        svg {
-          margin-right: 15px;
-        }
-      }
+    svg {
+      margin-right: 15px;
     }
   }
 `;
@@ -38,12 +39,13 @@ export const Profile = styled.div`
   align-items: center;
   font-size: 16px;
 
-  span {
+  strong {
+    display: block;
     color: #fff;
-    font-weight: bold;
   }
 
-  p {
+  span {
+    display: block;
     color: rgba(255, 255, 255, 0.6);
     font-size: 14px;
   }

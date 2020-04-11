@@ -1,10 +1,19 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { MdForum, MdPerson, MdPets, MdSettings } from 'react-icons/md';
+import {
+  MdDashboard,
+  MdForum,
+  MdPerson,
+  MdPets,
+  MdSettings,
+} from 'react-icons/md';
 
 import { Container, Profile } from './styles';
 
 export default function Sidebar() {
+  const profile = useSelector(state => state.user.profile);
+
   return (
     <Container>
       <div>
@@ -14,42 +23,42 @@ export default function Sidebar() {
             alt="Perfil"
           />
           <div>
-            <span>Brenda Matias</span>
-            <p>brenda@gmail.com</p>
+            <strong>{profile.name}</strong>
+            <span>{profile.email}</span>
           </div>
         </Profile>
         <ul>
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/dashboard">
+              <MdDashboard size={22} />
+              Dashboard
+            </Link>
           </li>
           <li>
-            <Link to="/">
+            <Link to="/messages">
               <MdForum size={22} />
               Messages
             </Link>
           </li>
           <li>
-            <Link to="/">
+            <Link to="/profile">
               <MdPerson size={22} />
               Profile
             </Link>
           </li>
           <li>
-            <Link to="/">
+            <Link to="/registeredpets">
               <MdPets size={22} />
               Registered Pets
-            </Link>
-          </li>
-          <li>
-            <Link to="/">
-              <MdSettings size={22} />
-              Settings
             </Link>
           </li>
         </ul>
       </div>
 
-      <button type="submit">Logout</button>
+      <Link to="/">
+        <MdSettings size={22} />
+        Settings
+      </Link>
     </Container>
   );
 }
