@@ -33,7 +33,9 @@ export const Scroll = styled(PerfectScrollbar)`
   padding: 5px 25px 5px 0;
 `;
 
-export const UserMessage = styled.div`
+export const UserMessages = styled.div`
+  display: flex;
+  justify-content: ${props => (props.author ? 'flex-end' : 'flex-start')};
   margin-bottom: 50px;
 
   div:first-child {
@@ -43,10 +45,11 @@ export const UserMessage = styled.div`
 
   p {
     margin-left: 18px;
-    background: #e9e8ed;
+    background: ${props => (props.author ? '#bb2929' : '#e9e8ed')};
     padding: 15px 20px;
-    border-radius: 25px 25px 25px 0px;
-    color: #464e59;
+    border-radius: ${props =>
+      props.author ? '25px 25px 0px 25px' : '25px 25px 25px 0px'};
+    color: ${props => (props.author ? '#fff' : '#464e59')};
     font-weight: 600;
 
     &::after {
@@ -58,7 +61,10 @@ export const UserMessage = styled.div`
       padding: 0;
       color: rgba(0, 0, 0, 0.4);
       font-weight: bold;
-      margin-left: -18px;
+      margin-left: ${props => (props.author ? '0' : '-18px')};
+      margin-right: ${props => (props.author ? '25px' : '0')};
+      left: ${props => (props.author ? '-50' : '50')};
+      text-align: end;
     }
   }
 
@@ -68,32 +74,38 @@ export const UserMessage = styled.div`
     display: block;
     padding-left: 10px;
   }
+
+  img {
+    display: ${props => (props.author ? 'none' : 'block')};
+  }
 `;
 
 export const NewMessage = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-  background: #fff;
-  padding: 15px 20px;
-  border-radius: 4px;
-  margin-top: 30px;
+    background: #fff;
+    padding: 15px 20px;
+    border-radius: 4px;
+    margin-top: 30px;
 
-  input {
-    border: 0;
-    padding: 10px;
-    width: 80%;
-    color: #464e59;
-  }
+    input {
+      border: 0;
+      padding: 10px;
+      width: 80%;
+      color: #464e59;
+    }
 
-  button {
-    border: none;
-    background: #e41320;
-    color: #fff;
-    font-weight: bold;
-    height: 38px;
-    padding: 0 25px;
-    border-radius: 0 25px 25px;
+    button {
+      border: none;
+      background: #e41320;
+      color: #fff;
+      font-weight: bold;
+      height: 38px;
+      padding: 0 25px;
+      border-radius: 0 25px 25px;
+    }
   }
 `;

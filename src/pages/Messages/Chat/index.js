@@ -1,15 +1,58 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { Form, Input } from '@rocketseat/unform';
+import openSocket from 'socket.io-client';
 
 import {
   Container,
   Header,
   ChatContent,
   Scroll,
-  UserMessage,
+  UserMessages,
   NewMessage,
 } from './styles';
 
+import api from '~/services/api';
+
+const socket = openSocket('http://localhost:8080');
+
 export default function Chat() {
+  const profile = useSelector(state => state.user.profile);
+
+  const [newMessage, setNewMessage] = useState('');
+  const [messages, setMessages] = useState([]);
+
+  async function getMessages() {
+    const { data } = await api.get(`messages/${2}`);
+
+    setMessages(data);
+    console.log(data);
+  }
+
+  useEffect(() => {
+    async function loadChat() {
+      getMessages();
+    }
+
+    loadChat();
+  }, []);
+
+  function handleSubmit() {
+    const messageObject = {
+      content: newMessage,
+      key: 'teste',
+      sender: profile.id,
+      recipient: profile.id === 1 ? 2 : 1,
+    };
+
+    getMessages();
+
+    socket.emit('sendMessage', messageObject);
+
+    console.log(messages);
+    setNewMessage('');
+  }
+
   return (
     <Container>
       <Header>
@@ -18,54 +61,33 @@ export default function Chat() {
       </Header>
       <ChatContent>
         <Scroll>
-          <UserMessage>
-            <div>
-              <img
-                src="https://api.adorable.io/avatars/60/abott@adorable.png"
-                alt="Perfil"
-              />
-              <p>Olá, tudo bem?</p>
-            </div>
-          </UserMessage>
-          <UserMessage>
-            <div>
-              <img
-                src="https://api.adorable.io/avatars/60/abott@adorable.png"
-                alt="Perfil"
-              />
-              <p>Olá, tudo bem?</p>
-            </div>
-          </UserMessage>
-          <UserMessage>
-            <div>
-              <img
-                src="https://api.adorable.io/avatars/60/abott@adorable.png"
-                alt="Perfil"
-              />
-              <p>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen book. It has
-                survived not only five centuries, but also the leap into
-                electronic typesetting, remaining essentially unchanged.
-              </p>
-            </div>
-          </UserMessage>
-          <UserMessage>
-            <div>
-              <img
-                src="https://api.adorable.io/avatars/60/abott@adorable.png"
-                alt="Perfil"
-              />
-              <p>Olá, tudo bem?</p>
-            </div>
-          </UserMessage>
+          {messages.map(message => (
+            <UserMessages
+              key={message._id}
+              author={message.sender === profile.id ? 'author' : ''}
+            >
+              <div>
+                <img
+                  src="https://api.adorable.io/avatars/60/abott@adorable.png"
+                  alt="Perfil"
+                />
+                <p>{message.content}</p>
+              </div>
+            </UserMessages>
+          ))}
         </Scroll>
 
         <NewMessage>
-          <input type="text" placeholder="Type a message..." />
-          <button type="submit">Send</button>
+          <Form onSubmit={handleSubmit}>
+            <Input
+              name="message"
+              type="text"
+              placeholder="Type a message..."
+              value={newMessage}
+              onChange={event => setNewMessage(event.target.value)}
+            />
+            <button type="submit">Send</button>
+          </Form>
         </NewMessage>
       </ChatContent>
     </Container>

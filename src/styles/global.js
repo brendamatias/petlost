@@ -40,6 +40,6 @@ export default createGlobalStyle`
   }
 
   img {
-    -webkit-user-drag: none
+    -webkit-user-draggit: none
   }
 `;
