@@ -14,7 +14,7 @@ import {
 
 import { api, socket } from '~/services/api';
 
-export default function Chat({ from, keyChat }) {
+export default function Chat({ from, fromId, keyChat }) {
   const profile = useSelector(state => state.user.profile);
 
   const [newMessage, setNewMessage] = useState('');
@@ -22,7 +22,7 @@ export default function Chat({ from, keyChat }) {
 
   useEffect(() => {
     async function getMessages() {
-      const { data } = await api.get(`messages/${from}`);
+      const { data } = await api.get(`messages/${fromId}`);
       setMessages(data);
     }
 
@@ -35,7 +35,7 @@ export default function Chat({ from, keyChat }) {
     }
 
     loadChat();
-  }, [from]);
+  }, [fromId]);
 
   function handleSubmit() {
     const messageObject = {
@@ -56,7 +56,7 @@ export default function Chat({ from, keyChat }) {
     <Container>
       <Header>
         <strong>Pet Bolinha</strong>
-        <span>From: User Test</span>
+        <span>From: {from}</span>
       </Header>
       <ChatContent>
         <Scroll>
@@ -94,9 +94,7 @@ export default function Chat({ from, keyChat }) {
 }
 
 Chat.propTypes = {
-  from: PropTypes.number.isRequired,
-};
-
-Chat.propTypes = {
+  from: PropTypes.string.isRequired,
+  fromId: PropTypes.number.isRequired,
   keyChat: PropTypes.string.isRequired,
 };

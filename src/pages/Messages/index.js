@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+
 import { format, parseISO } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 
@@ -13,6 +15,7 @@ import { api } from '~/services/api';
 export default function Messages() {
   const profile = useSelector(state => state.user.profile);
   const [chats, setChats] = useState([]);
+  const [fromId, setFromId] = useState('');
   const [from, setFrom] = useState('');
   const [keyChat, setKeyChat] = useState('');
 
@@ -20,9 +23,23 @@ export default function Messages() {
 
   const formatDate = d => format(d, "dd ' de ' MMMM'", { locale: pt });
 
-  function changeChat(id, key) {
-    setFrom(id);
-    setKeyChat(key);
+  async function changeChat(id, key) {
+    try {
+      const { data } = await api.get(`users/${id}`);
+
+      setFromId(data.id);
+      setFrom(data.name);
+      setKeyChat(key);
+    } catch (err) {
+      const { response } = err;
+
+      setFrom('');
+      setKeyChat('');
+
+      toast.error(
+        response.data.error || 'Oops, server error. Try again later.'
+      );
+    }
   }
 
   useEffect(() => {
@@ -96,7 +113,7 @@ export default function Messages() {
             </Scroll>
           </List>
 
-          {from ? <Chat from={from} keyChat={keyChat} /> : ''}
+          {from ? <Chat from={from} fromId={fromId} keyChat={keyChat} /> : ''}
         </Content>
       )}
     </Container>
