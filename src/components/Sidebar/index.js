@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import {
   MdDashboard,
   MdForum,
@@ -29,36 +29,36 @@ export default function Sidebar() {
         </Profile>
         <ul>
           <li>
-            <Link to="/dashboard">
+            <NavLink to="/dashboard" activeClassName="active">
               <MdDashboard size={22} />
               Dashboard
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link to="/messages">
+            <NavLink to="/messages" activeClassName="active">
               <MdForum size={22} />
               Messages
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link to="/profile">
+            <NavLink to="/profile" activeClassName="active">
               <MdPerson size={22} />
               Profile
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link to="/registeredpets">
+            <NavLink to="/registeredpets" activeClassName="active">
               <MdPets size={22} />
               Registered Pets
-            </Link>
+            </NavLink>
           </li>
         </ul>
       </div>
 
-      <Link to="/">
+      <NavLink to="/profile" activeClassName="active">
         <MdSettings size={22} />
         Settings
-      </Link>
+      </NavLink>
     </Container>
   );
 }
