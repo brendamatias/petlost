@@ -29,17 +29,22 @@ export const List = styled.div`
 export const Search = styled.div`
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #d9dce4;
-  padding-bottom: 10px;
-  margin-bottom: 20px;
+  justify-content: space-between;
+  background: #ebecf2;
+  margin-right: 25px;
+  padding: 5px 20px;
+  margin-bottom: 30px;
+  border-radius: 8px;
 
   input {
     border: 0;
     background: none;
-    padding: 15px;
+    padding: 15px 0;
     font-size: 16px;
     margin-left: 6px;
     color: #464e59;
+    width: 100%;
+    margin-right: 14px;
 
     &::placeholder {
       color: #abaeb9;
@@ -54,44 +59,50 @@ export const Scroll = styled(PerfectScrollbar)`
 
 export const Preview = styled.div`
   display: grid;
-  grid-template-columns: 50px 2fr 0.5fr;
+  grid-template-columns: 50px 2fr 1fr;
   gap: 20px;
 
   margin-bottom: 20px;
   background: #fff;
-  padding: 20px;
-  border-radius: 4px;
+  padding: 30px;
+  border-radius: 8px;
+
+  button {
+    border: none;
+    background: none;
+    display: flex;
+    flex-direction: column;
+  }
 
   strong {
     display: block;
     color: #454d58;
   }
 
-  span {
+  p {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
     color: #8e919b;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
   }
 
-  div:last-child {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-  }
-
-  h5 {
+  span {
     float: right;
     color: rgba(0, 0, 0, 0.4);
   }
 
   .notification {
-    display: flex;
-    align-items: center !important;
-    margin-top: 10px;
-    justify-content: center;
-    color: #fff;
-    font-size: 11px;
-    background: #e41320;
-    width: 20px;
-    height: 20px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-right: 35px;
+    margin-top: 15px;
+    background: #b2b6c4;
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
   }
 `;
