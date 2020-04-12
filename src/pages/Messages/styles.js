@@ -2,10 +2,6 @@ import styled from 'styled-components';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
 export const Container = styled.div`
-  h1 {
-    color: #464e59;
-  }
-
   img {
     width: 50px;
     height: 50px;
