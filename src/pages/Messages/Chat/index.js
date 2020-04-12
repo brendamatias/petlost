@@ -14,7 +14,7 @@ import {
 
 import api from '~/services/api';
 
-const socket = openSocket('http://localhost:8080');
+const socket = openSocket('https://petlost.herokuapp.com');
 
 export default function Chat() {
   const profile = useSelector(state => state.user.profile);
