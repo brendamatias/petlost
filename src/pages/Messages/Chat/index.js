@@ -26,11 +26,14 @@ export default function Chat() {
     const { data } = await api.get(`messages/${2}`);
 
     setMessages(data);
-    console.log(data);
   }
 
   useEffect(() => {
     async function loadChat() {
+      socket.on('received', () => {
+        getMessages();
+      });
+
       getMessages();
     }
 
@@ -49,7 +52,7 @@ export default function Chat() {
 
     socket.emit('sendMessage', messageObject);
 
-    console.log(messages);
+    // console.log(messages);
     setNewMessage('');
   }
 
