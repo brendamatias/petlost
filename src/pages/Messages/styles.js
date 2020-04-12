@@ -77,6 +77,7 @@ export const Preview = styled.div`
   strong {
     display: block;
     color: #454d58;
+    text-align: left;
   }
 
   p {

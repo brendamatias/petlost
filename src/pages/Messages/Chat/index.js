@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { Form, Input } from '@rocketseat/unform';
-import openSocket from 'socket.io-client';
 
 import {
   Container,
@@ -13,24 +12,20 @@ import {
   NewMessage,
 } from './styles';
 
-import api from '~/services/api';
+import { api, socket } from '~/services/api';
 
-const socket = openSocket('https://petlost.herokuapp.com');
-
-export default function Chat({ from }) {
+export default function Chat({ from, keyChat }) {
   const profile = useSelector(state => state.user.profile);
 
   const [newMessage, setNewMessage] = useState('');
   const [messages, setMessages] = useState([]);
 
-  async function getMessages() {
-    const { data } = await api.get(`messages/${2}`);
-
-    setMessages(data);
-    console.log(data);
-  }
-
   useEffect(() => {
+    async function getMessages() {
+      const { data } = await api.get(`messages/${from}`);
+      setMessages(data);
+    }
+
     async function loadChat() {
       socket.on('received', () => {
         getMessages();
@@ -40,17 +35,17 @@ export default function Chat({ from }) {
     }
 
     loadChat();
-  }, []);
+  }, [from]);
 
   function handleSubmit() {
     const messageObject = {
       content: newMessage,
-      key: 'teste',
+      key: keyChat,
       sender: profile.id,
       recipient: from,
     };
 
-    getMessages();
+    setMessages([...messages, messageObject]);
 
     socket.emit('sendMessage', messageObject);
 
@@ -65,9 +60,9 @@ export default function Chat({ from }) {
       </Header>
       <ChatContent>
         <Scroll>
-          {messages.map(message => (
+          {messages.map((message, index) => (
             <UserMessages
-              key={message._id}
+              key={index}
               author={message.sender === profile.id ? 'author' : ''}
             >
               <div>
@@ -100,4 +95,8 @@ export default function Chat({ from }) {
 
 Chat.propTypes = {
   from: PropTypes.number.isRequired,
+};
+
+Chat.propTypes = {
+  keyChat: PropTypes.string.isRequired,
 };

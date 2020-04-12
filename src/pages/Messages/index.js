@@ -8,19 +8,21 @@ import { Container, Content, List, Search, Scroll, Preview } from './styles';
 
 import Chat from './Chat';
 
-import api from '~/services/api';
+import { api } from '~/services/api';
 
 export default function Messages() {
   const profile = useSelector(state => state.user.profile);
   const [chats, setChats] = useState([]);
-  const [from, setFrom] = useState();
+  const [from, setFrom] = useState('');
+  const [keyChat, setKeyChat] = useState('');
 
   const [loading, setLoading] = useState(false);
 
   const formatDate = d => format(d, "dd ' de ' MMMM'", { locale: pt });
 
-  function changeChat(id) {
+  function changeChat(id, key) {
     setFrom(id);
+    setKeyChat(key);
   }
 
   useEffect(() => {
@@ -78,7 +80,7 @@ export default function Messages() {
                     <button
                       type="submit"
                       onClick={() => {
-                        changeChat(chat.fromId);
+                        changeChat(chat.fromId, chat.key);
                       }}
                     >
                       <strong>{chat.from}</strong>
@@ -94,7 +96,7 @@ export default function Messages() {
             </Scroll>
           </List>
 
-          {from ? <Chat from={from} /> : ''}
+          {from ? <Chat from={from} keyChat={keyChat} /> : ''}
         </Content>
       )}
     </Container>
