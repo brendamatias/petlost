@@ -12,6 +12,8 @@ import {
   NewMessage,
 } from './styles';
 
+import SecondaryLoading from '~/components/SecondaryLoading';
+
 import { api, socket } from '~/services/api';
 
 export default function Chat({ from, fromId, keyChat }) {
@@ -19,11 +21,17 @@ export default function Chat({ from, fromId, keyChat }) {
 
   const [newMessage, setNewMessage] = useState('');
   const [messages, setMessages] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function getMessages() {
+      setLoading(true);
+
       const { data } = await api.get(`messages/${fromId}`);
+
       setMessages(data);
+
+      setLoading(false);
     }
 
     async function loadChat() {
@@ -54,41 +62,47 @@ export default function Chat({ from, fromId, keyChat }) {
 
   return (
     <Container>
-      <Header>
-        <strong>Pet Bolinha</strong>
-        <span>From: {from}</span>
-      </Header>
-      <ChatContent>
-        <Scroll>
-          {messages.map((message, index) => (
-            <UserMessages
-              key={index}
-              author={message.sender === profile.id ? 'author' : ''}
-            >
-              <div>
-                <img
-                  src="https://api.adorable.io/avatars/60/abott@adorable.png"
-                  alt="Perfil"
-                />
-                <p>{message.content}</p>
-              </div>
-            </UserMessages>
-          ))}
-        </Scroll>
+      {loading ? (
+        <SecondaryLoading top={25} right={25} />
+      ) : (
+        <>
+          <Header>
+            <strong>Pet Bolinha</strong>
+            <span>From: {from}</span>
+          </Header>
+          <ChatContent>
+            <Scroll>
+              {messages.map((message, index) => (
+                <UserMessages
+                  key={index}
+                  author={message.sender === profile.id ? 'author' : ''}
+                >
+                  <div>
+                    <img
+                      src="https://api.adorable.io/avatars/60/abott@adorable.png"
+                      alt="Perfil"
+                    />
+                    <p>{message.content}</p>
+                  </div>
+                </UserMessages>
+              ))}
+            </Scroll>
 
-        <NewMessage>
-          <Form onSubmit={handleSubmit}>
-            <Input
-              name="message"
-              type="text"
-              placeholder="Type a message..."
-              value={newMessage}
-              onChange={event => setNewMessage(event.target.value)}
-            />
-            <button type="submit">Send</button>
-          </Form>
-        </NewMessage>
-      </ChatContent>
+            <NewMessage>
+              <Form onSubmit={handleSubmit}>
+                <Input
+                  name="message"
+                  type="text"
+                  placeholder="Type a message..."
+                  value={newMessage}
+                  onChange={event => setNewMessage(event.target.value)}
+                />
+                <button type="submit">Send</button>
+              </Form>
+            </NewMessage>
+          </ChatContent>
+        </>
+      )}
     </Container>
   );
 }

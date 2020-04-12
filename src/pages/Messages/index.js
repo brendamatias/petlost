@@ -8,6 +8,7 @@ import pt from 'date-fns/locale/pt';
 import { MdSearch } from 'react-icons/md';
 import { Container, Content, List, Search, Scroll, Preview } from './styles';
 
+import Loading from '~/components/Loading';
 import Chat from './Chat';
 
 import { api } from '~/services/api';
@@ -18,8 +19,7 @@ export default function Messages() {
   const [fromId, setFromId] = useState('');
   const [from, setFrom] = useState('');
   const [keyChat, setKeyChat] = useState('');
-
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const formatDate = d => format(d, "dd ' de ' MMMM'", { locale: pt });
 
@@ -74,48 +74,50 @@ export default function Messages() {
   }, [profile.id]);
 
   return (
-    <Container>
-      <h1>Messages</h1>
-
+    <>
       {loading ? (
-        ''
+        <Loading />
       ) : (
-        <Content>
-          <List>
-            <Search>
-              <input type="text" placeholder="Search" />
-              <MdSearch color="#9D9CA1" size={26} />
-            </Search>
-            <Scroll>
-              {chats.map(chat => (
-                <Preview key={chat._id}>
-                  <img
-                    src="https://api.adorable.io/avatars/60/abott@adorable.png"
-                    alt="Perfil"
-                  />
-                  <div>
-                    <button
-                      type="submit"
-                      onClick={() => {
-                        changeChat(chat.fromId, chat.key);
-                      }}
-                    >
-                      <strong>{chat.from}</strong>
-                      <p>{chat.content}</p>
-                    </button>
-                  </div>
-                  <div>
-                    <div className="notification" />
-                    <span>{chat.formattedDate}</span>
-                  </div>
-                </Preview>
-              ))}
-            </Scroll>
-          </List>
+        <Container>
+          <h1>Messages</h1>
 
-          {from ? <Chat from={from} fromId={fromId} keyChat={keyChat} /> : ''}
-        </Content>
+          <Content>
+            <List>
+              <Search>
+                <input type="text" placeholder="Search" />
+                <MdSearch color="#9D9CA1" size={26} />
+              </Search>
+              <Scroll>
+                {chats.map(chat => (
+                  <Preview key={chat._id}>
+                    <img
+                      src="https://api.adorable.io/avatars/60/abott@adorable.png"
+                      alt="Perfil"
+                    />
+                    <div>
+                      <button
+                        type="submit"
+                        onClick={() => {
+                          changeChat(chat.fromId, chat.key);
+                        }}
+                      >
+                        <strong>{chat.from}</strong>
+                        <p>{chat.content}</p>
+                      </button>
+                    </div>
+                    <div>
+                      <div className="notification" />
+                      <span>{chat.formattedDate}</span>
+                    </div>
+                  </Preview>
+                ))}
+              </Scroll>
+            </List>
+
+            {from ? <Chat from={from} fromId={fromId} keyChat={keyChat} /> : ''}
+          </Content>
+        </Container>
       )}
-    </Container>
+    </>
   );
 }
