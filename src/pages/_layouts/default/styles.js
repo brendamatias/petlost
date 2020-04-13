@@ -29,5 +29,5 @@ export const Content = styled.div`
 export const Scroll = styled(PerfectScrollbar)`
   max-height: 100vh;
   padding: 0 25px 0 0;
-  background: #f7f6fb;
+  background: ${props => props.theme.colors.background};
 `;
