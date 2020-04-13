@@ -50,12 +50,12 @@ export default function Chat({ from, fromId, keyChat }) {
       content: newMessage,
       key: keyChat,
       sender: profile.id,
-      recipient: from,
+      recipient: fromId,
     };
 
-    setMessages([...messages, messageObject]);
-
     socket.emit('sendMessage', messageObject);
+
+    setMessages([...messages, messageObject]);
 
     setNewMessage('');
   }
