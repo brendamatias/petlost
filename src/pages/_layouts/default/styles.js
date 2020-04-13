@@ -12,7 +12,7 @@ export const Content = styled.div`
   padding: 60px 80px;
 
   h1 {
-    color: #464e59;
+    color: ${props => props.theme.colors.textPrimary};
 
     &:after {
       display: block;
@@ -20,7 +20,7 @@ export const Content = styled.div`
       width: 30px;
       border-radius: 4px;
       height: 4px;
-      background: #bb2929;
+      background: ${props => props.theme.colors.primary};
       margin-top: 5px;
     }
   }

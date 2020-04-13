@@ -11,7 +11,7 @@ export const Header = styled.div`
   strong {
     font-size: 18px;
     display: block;
-    color: #464e59;
+    color: ${props => props.theme.colors.textPrimary};
   }
 
   span {
@@ -45,11 +45,12 @@ export const UserMessages = styled.div`
 
   p {
     margin-left: 18px;
-    background: ${props => (props.author ? '#bb2929' : '#e9e8ed')};
+    background: ${props =>
+      props.author ? props.theme.colors.primary : '#e9e8ed'};
     padding: 15px 20px;
     border-radius: ${props =>
       props.author ? '25px 25px 0px 25px' : '25px 25px 25px 0px'};
-    color: ${props => (props.author ? '#fff' : '#464e59')};
+    color: ${props => (props.author ? props.theme.colors.tertiary : '#464e59')};
     font-weight: 600;
 
     &::after {
@@ -86,7 +87,7 @@ export const NewMessage = styled.div`
     justify-content: space-between;
     align-items: center;
 
-    background: #fff;
+    background: ${props => props.theme.colors.tertiary};
     padding: 15px 20px;
     border-radius: 4px;
     margin-top: 30px;
@@ -95,13 +96,13 @@ export const NewMessage = styled.div`
       border: 0;
       padding: 10px;
       width: 80%;
-      color: #464e59;
+      color: ${props => props.theme.colors.textPrimary};
     }
 
     button {
       border: none;
       background: #e41320;
-      color: #fff;
+      color: ${props => props.theme.colors.tertiary};
       font-weight: bold;
       height: 38px;
       padding: 0 25px;

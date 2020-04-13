@@ -80,7 +80,7 @@ export const Auth = styled.div`
       border: 0;
       border-radius: 4px;
       transition: background 0.2s;
-      color: #fff;
+      color: ${props => props.theme.colors.tertiary};
       font-size: 16px;
       font-weight: bold;
       height: 46px;

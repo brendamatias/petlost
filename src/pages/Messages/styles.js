@@ -38,7 +38,7 @@ export const Search = styled.div`
     padding: 15px 0;
     font-size: 16px;
     margin-left: 6px;
-    color: #464e59;
+    color: ${props => props.theme.colors.textPrimary};
     width: 100%;
     margin-right: 14px;
 
@@ -59,7 +59,7 @@ export const Preview = styled.div`
   gap: 20px;
 
   margin-bottom: 20px;
-  background: #fff;
+  background: ${props => props.theme.colors.tertiary};
   padding: 30px;
   border-radius: 8px;
 

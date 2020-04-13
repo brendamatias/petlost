@@ -65,7 +65,7 @@ export const Container = styled.div`
   .progress {
     animation: ${loader} 2s ease infinite;
     background: #e41320;
-    color: #fff;
+    color: ${props => props.theme.colors.tertiary};
     padding: 5px;
     width: 0;
   }

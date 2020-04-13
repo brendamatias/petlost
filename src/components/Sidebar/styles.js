@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  background: linear-gradient(645deg, #de2732, #bb2929);
+  background: ${props =>
+    `linear-gradient(645deg, ${props.theme.colors.secundary}, ${props.theme.colors.primary})`};
   /* background: #e41320; */
   padding: 60px 40px;
   display: flex;
@@ -18,7 +19,7 @@ export const Container = styled.div`
   a {
     display: flex;
     align-items: center;
-    color: #fff;
+    color: ${props => props.theme.colors.light};
     font-size: 16px;
     font-weight: 600;
     transition: opacity 0.2s;
@@ -46,7 +47,7 @@ export const Profile = styled.div`
 
   strong {
     display: block;
-    color: #fff;
+    color: ${props => props.theme.colors.tertiary};
   }
 
   span {

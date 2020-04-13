@@ -20,7 +20,7 @@ export default function SwitchTheme({ toggleTheme }) {
         offColor="#E2E2E2"
         onColor="#23343B"
         offHandleColor="#FEFEFE"
-        onHandleColor="#bb2929"
+        onHandleColor={colors.primary}
       />
     </Container>
   );

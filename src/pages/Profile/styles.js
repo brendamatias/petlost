@@ -46,7 +46,7 @@ export const Container = styled.div`
       border-radius: 8px;
       font-size: 16px;
       margin-left: 6px;
-      color: #464e59;
+      color: ${props => props.theme.colors.textPrimary};
       width: 100%;
       margin: 0 0 10px;
       padding: 0 20px;
@@ -73,7 +73,7 @@ export const Container = styled.div`
 
     button {
       margin: 5px 0 0;
-      background: #bb2929;
+      background: ${props => props.theme.colors.primary};
       &:hover {
         background: ${darken(0.03, '#bb2929')};
       }
@@ -83,7 +83,7 @@ export const Container = styled.div`
   button {
     height: 44px;
     font-weight: bold;
-    color: #fff;
+    color: ${props => props.theme.colors.tertiary};
     border: 0;
     border-radius: 4px;
     font-size: 16px;
@@ -94,7 +94,7 @@ export const Container = styled.div`
     display: block;
     width: 100%;
     margin: 10px 0 0;
-    background: #bb2929;
+    background: ${props => props.theme.colors.primary};
     &:hover {
       background: ${darken(0.08, '#bb2929')};
     }
