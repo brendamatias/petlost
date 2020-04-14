@@ -1,14 +1,59 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { MdLocationOn, MdFavorite } from 'react-icons/md';
-import { Container, Content, TagsFilters, TagFilter } from './styles';
+import { Container, Content, Filters, TagsFilters, TagFilter } from './styles';
+
+import Filter from './Filter';
 
 export default function Dashboard() {
+  const [adoption, setAdoption] = useState(false);
+  const [cats, setCats] = useState(false);
+  const [disappear, setDisappear] = useState(false);
+  const [dogs, setDogs] = useState(false);
+  const [mating, setMating] = useState(false);
+
   return (
     <Container>
       <h1>Dashboard</h1>
 
       <Content>
+        <Filters>
+          <Filter
+            active={adoption}
+            handleSubmit={() => {
+              setAdoption(!adoption);
+            }}
+            content="Adoption"
+          />
+          <Filter
+            active={cats}
+            handleSubmit={() => {
+              setCats(!cats);
+            }}
+            content="Cats"
+          />
+          <Filter
+            active={disappear}
+            handleSubmit={() => {
+              setDisappear(!disappear);
+            }}
+            content="Disappear"
+          />
+          <Filter
+            active={dogs}
+            handleSubmit={() => {
+              setDogs(!dogs);
+            }}
+            content="Dogs"
+          />
+          <Filter
+            active={mating}
+            handleSubmit={() => {
+              setMating(!mating);
+            }}
+            content="Mating"
+          />
+        </Filters>
         <ul>
           <li>
             <button type="submit">
