@@ -30,6 +30,27 @@ export default function Dashboard() {
               </p>
             </div>
           </li>
+          <li>
+            <button type="submit">
+              <MdFavorite size={15} />
+            </button>
+            <img
+              src="https://www.tenhomaisdiscosqueamigos.com/wp-content/uploads/2020/03/marnie-dog.jpg"
+              alt=""
+            />
+            <div>
+              <TagsFilters>
+                <TagFilter color="#1066BD">Disappear</TagFilter>
+                <TagFilter color="#C24F00">Dogs</TagFilter>
+                <TagFilter color="#BA2929">Mating</TagFilter>
+              </TagsFilters>
+              <strong>Cebolinha</strong>
+              <p>
+                <MdLocationOn color="#bb2929" size={18} />
+                Recife - PE <strong>(3.6 km)</strong>
+              </p>
+            </div>
+          </li>
         </ul>
       </Content>
     </Container>
