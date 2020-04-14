@@ -9,6 +9,33 @@ import Filter from './Filter';
 
 import { api, socket } from '~/services/api';
 
+const pets = [
+  {
+    name: 'Bolinha',
+    img:
+      'https://s2.glbimg.com/9rfjedp117RCh68P_rzWxcOQZUY=/e.glbimg.com/og/ed/f/original/2018/02/01/26907788_1614183255284072_4356465325754439623_n.jpg',
+    filters: ['Adoption', 'Cats'],
+  },
+  {
+    name: 'Cebolinha',
+    img:
+      'https://www.tenhomaisdiscosqueamigos.com/wp-content/uploads/2020/03/marnie-dog.jpg"',
+    filters: ['Adoption', 'Dogs'],
+  },
+  {
+    name: 'Monica',
+    img:
+      'https://www.tenhomaisdiscosqueamigos.com/wp-content/uploads/2020/03/marnie-dog.jpg"',
+    filters: ['Mating', 'Dogs'],
+  },
+  {
+    name: 'Cascão',
+    img:
+      'https://www.tenhomaisdiscosqueamigos.com/wp-content/uploads/2020/03/marnie-dog.jpg"',
+    filters: ['Disappear', 'Dogs'],
+  },
+];
+
 export default function Dashboard() {
   const [adoption, setAdoption] = useState(false);
   const [cats, setCats] = useState(false);
@@ -17,6 +44,26 @@ export default function Dashboard() {
   const [mating, setMating] = useState(false);
 
   const profile = useSelector(state => state.user.profile);
+
+  function returnColor(filter) {
+    if (filter === 'Adoption') {
+      return '#20BAA3';
+    }
+
+    if (filter === 'Cats') {
+      return '#4501BD';
+    }
+
+    if (filter === 'Disappear') {
+      return '#1066BD';
+    }
+
+    if (filter === 'Dogs') {
+      return '#C24F00';
+    }
+
+    return '#BA2929';
+  }
 
   async function handleSubmit(id) {
     try {
@@ -85,234 +132,26 @@ export default function Dashboard() {
         </Filters>
 
         <ul>
-          <li>
-            <button type="submit">
-              <MdFavorite size={15} />
-            </button>
-            <img
-              src="https://s2.glbimg.com/9rfjedp117RCh68P_rzWxcOQZUY=/e.glbimg.com/og/ed/f/original/2018/02/01/26907788_1614183255284072_4356465325754439623_n.jpg"
-              alt=""
-            />
-            <div>
-              <Tags>
-                <Tag color="#20BAA3">Adoption</Tag>
-                <Tag color="#4501BD">Cats</Tag>
-              </Tags>
-              <strong>Bolinha</strong>
-              <p>
-                <MdLocationOn color="#bb2929" size={18} />
-                Recife - PE <strong>(3.6 km)</strong>
-              </p>
-            </div>
-          </li>
-          <li>
-            <button type="submit">
-              <MdFavorite size={15} />
-            </button>
-            <img
-              src="https://www.tenhomaisdiscosqueamigos.com/wp-content/uploads/2020/03/marnie-dog.jpg"
-              alt=""
-            />
-            <div>
-              <Tag color="#1066BD">Disappear</Tag>
-              <Tag color="#BA2929">Dogs</Tag>
-              <strong>Bolinha</strong>
-              <p>
-                <MdLocationOn color="#bb2929" size={18} />
-                Recife - PE <strong>(3.6 km)</strong>
-              </p>
-            </div>
-          </li>
-          <li>
-            <button type="submit">
-              <MdFavorite size={15} />
-            </button>
-            <img
-              src="https://s2.glbimg.com/9rfjedp117RCh68P_rzWxcOQZUY=/e.glbimg.com/og/ed/f/original/2018/02/01/26907788_1614183255284072_4356465325754439623_n.jpg"
-              alt=""
-            />
-            <div>
-              <Tags>
-                <Tag color="#20BAA3">Adoption</Tag>
-                <Tag color="#4501BD">Cats</Tag>
-              </Tags>
-              <strong>Bolinha</strong>
-              <p>
-                <MdLocationOn color="#bb2929" size={18} />
-                Recife - PE <strong>(3.6 km)</strong>
-              </p>
-            </div>
-          </li>
-          <li>
-            <button type="submit">
-              <MdFavorite size={15} />
-            </button>
-            <img
-              src="https://www.tenhomaisdiscosqueamigos.com/wp-content/uploads/2020/03/marnie-dog.jpg"
-              alt=""
-            />
-            <div>
-              <Tag color="#1066BD">Disappear</Tag>
-              <Tag color="#BA2929">Dogs</Tag>
-              <strong>Bolinha</strong>
-              <p>
-                <MdLocationOn color="#bb2929" size={18} />
-                Recife - PE <strong>(3.6 km)</strong>
-              </p>
-            </div>
-          </li>
-          <li>
-            <button type="submit">
-              <MdFavorite size={15} />
-            </button>
-            <img
-              src="https://s2.glbimg.com/9rfjedp117RCh68P_rzWxcOQZUY=/e.glbimg.com/og/ed/f/original/2018/02/01/26907788_1614183255284072_4356465325754439623_n.jpg"
-              alt=""
-            />
-            <div>
-              <Tags>
-                <Tag color="#20BAA3">Adoption</Tag>
-                <Tag color="#4501BD">Cats</Tag>
-              </Tags>
-              <strong>Bolinha</strong>
-              <p>
-                <MdLocationOn color="#bb2929" size={18} />
-                Recife - PE <strong>(3.6 km)</strong>
-              </p>
-            </div>
-          </li>
-          <li>
-            <button type="submit">
-              <MdFavorite size={15} />
-            </button>
-            <img
-              src="https://www.tenhomaisdiscosqueamigos.com/wp-content/uploads/2020/03/marnie-dog.jpg"
-              alt=""
-            />
-            <div>
-              <Tag color="#1066BD">Disappear</Tag>
-              <Tag color="#BA2929">Dogs</Tag>
-              <strong>Bolinha</strong>
-              <p>
-                <MdLocationOn color="#bb2929" size={18} />
-                Recife - PE <strong>(3.6 km)</strong>
-              </p>
-            </div>
-          </li>
-          <li>
-            <button type="submit">
-              <MdFavorite size={15} />
-            </button>
-            <img
-              src="https://s2.glbimg.com/9rfjedp117RCh68P_rzWxcOQZUY=/e.glbimg.com/og/ed/f/original/2018/02/01/26907788_1614183255284072_4356465325754439623_n.jpg"
-              alt=""
-            />
-            <div>
-              <Tags>
-                <Tag color="#20BAA3">Adoption</Tag>
-                <Tag color="#4501BD">Cats</Tag>
-              </Tags>
-              <strong>Bolinha</strong>
-              <p>
-                <MdLocationOn color="#bb2929" size={18} />
-                Recife - PE <strong>(3.6 km)</strong>
-              </p>
-            </div>
-          </li>
-          <li>
-            <button type="submit">
-              <MdFavorite size={15} />
-            </button>
-            <img
-              src="https://www.tenhomaisdiscosqueamigos.com/wp-content/uploads/2020/03/marnie-dog.jpg"
-              alt=""
-            />
-            <div>
-              <Tag color="#1066BD">Disappear</Tag>
-              <Tag color="#BA2929">Dogs</Tag>
-              <strong>Bolinha</strong>
-              <p>
-                <MdLocationOn color="#bb2929" size={18} />
-                Recife - PE <strong>(3.6 km)</strong>
-              </p>
-            </div>
-          </li>
-          <li>
-            <button type="submit">
-              <MdFavorite size={15} />
-            </button>
-            <img
-              src="https://s2.glbimg.com/9rfjedp117RCh68P_rzWxcOQZUY=/e.glbimg.com/og/ed/f/original/2018/02/01/26907788_1614183255284072_4356465325754439623_n.jpg"
-              alt=""
-            />
-            <div>
-              <Tags>
-                <Tag color="#20BAA3">Adoption</Tag>
-                <Tag color="#4501BD">Cats</Tag>
-              </Tags>
-              <strong>Bolinha</strong>
-              <p>
-                <MdLocationOn color="#bb2929" size={18} />
-                Recife - PE <strong>(3.6 km)</strong>
-              </p>
-            </div>
-          </li>
-          <li>
-            <button type="submit">
-              <MdFavorite size={15} />
-            </button>
-            <img
-              src="https://www.tenhomaisdiscosqueamigos.com/wp-content/uploads/2020/03/marnie-dog.jpg"
-              alt=""
-            />
-            <div>
-              <Tag color="#1066BD">Disappear</Tag>
-              <Tag color="#BA2929">Dogs</Tag>
-              <strong>Bolinha</strong>
-              <p>
-                <MdLocationOn color="#bb2929" size={18} />
-                Recife - PE <strong>(3.6 km)</strong>
-              </p>
-            </div>
-          </li>
-          <li>
-            <button type="submit">
-              <MdFavorite size={15} />
-            </button>
-            <img
-              src="https://s2.glbimg.com/9rfjedp117RCh68P_rzWxcOQZUY=/e.glbimg.com/og/ed/f/original/2018/02/01/26907788_1614183255284072_4356465325754439623_n.jpg"
-              alt=""
-            />
-            <div>
-              <Tags>
-                <Tag color="#20BAA3">Adoption</Tag>
-                <Tag color="#4501BD">Cats</Tag>
-              </Tags>
-              <strong>Bolinha</strong>
-              <p>
-                <MdLocationOn color="#bb2929" size={18} />
-                Recife - PE <strong>(3.6 km)</strong>
-              </p>
-            </div>
-          </li>
-          <li>
-            <button type="submit">
-              <MdFavorite size={15} />
-            </button>
-            <img
-              src="https://www.tenhomaisdiscosqueamigos.com/wp-content/uploads/2020/03/marnie-dog.jpg"
-              alt=""
-            />
-            <div>
-              <Tag color="#1066BD">Disappear</Tag>
-              <Tag color="#BA2929">Dogs</Tag>
-              <strong>Bolinha</strong>
-              <p>
-                <MdLocationOn color="#bb2929" size={18} />
-                Recife - PE <strong>(3.6 km)</strong>
-              </p>
-            </div>
-          </li>
+          {pets.map(pet => (
+            <li>
+              <button type="submit">
+                <MdFavorite size={15} />
+              </button>
+              <img src={pet.img} alt="" />
+              <div>
+                <Tags>
+                  {pet.filters.map(filter => (
+                    <Tag color={returnColor(filter)}>{filter}</Tag>
+                  ))}
+                </Tags>
+                <strong>{pet.name}</strong>
+                <p>
+                  <MdLocationOn color="#bb2929" size={18} />
+                  Recife - PE <strong>(3.6 km)</strong>
+                </p>
+              </div>
+            </li>
+          ))}
         </ul>
       </Content>
     </Container>
