@@ -88,7 +88,7 @@ export const TagsFilters = styled.div`
   flex-wrap: wrap;
 `;
 
-export const Tags = styled.span`
+export const TagFilter = styled.span`
   background: ${props => lighten(0.5, props.color)};
   color: ${props => props.color};
   padding: 2px 15px;
