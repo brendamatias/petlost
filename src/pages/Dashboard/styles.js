@@ -83,12 +83,12 @@ export const Filters = styled.div`
   display: flex;
 `;
 
-export const Tags = styled.div`
+export const TagsFilters = styled.div`
   display: flex;
   flex-wrap: wrap;
 `;
 
-export const Tag = styled.span`
+export const Tags = styled.span`
   background: ${props => lighten(0.5, props.color)};
   color: ${props => props.color};
   padding: 2px 15px;

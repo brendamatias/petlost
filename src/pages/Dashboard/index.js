@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
 import { MdLocationOn, MdFavorite } from 'react-icons/md';
-import { Container, Content, Filters, Tags, Tag } from './styles';
+import { Container, Content, Filters, TagsFilters, TagFilter } from './styles';
 
 import { api, socket } from '~/services/api';
 
@@ -76,13 +76,13 @@ export default function Dashboard() {
               </button>
               <img src={pet.img} alt="" />
               <div>
-                <Tags>
+                <TagsFilters>
                   {pet.filters.map(filter => (
-                    <Tag key={filter} color={returnColor(filter)}>
+                    <TagFilter key={filter} color={returnColor(filter)}>
                       {filter}
-                    </Tag>
+                    </TagFilter>
                   ))}
-                </Tags>
+                </TagsFilters>
                 <strong>{pet.name}</strong>
                 <p>
                   <MdLocationOn color="#bb2929" size={18} />
