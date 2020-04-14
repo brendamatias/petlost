@@ -13,6 +13,7 @@ export const Content = styled.div`
 
   h1 {
     color: ${props => props.theme.colors.textPrimary};
+    margin-bottom: 60px;
 
     &:after {
       display: block;

@@ -13,7 +13,6 @@ export const Content = styled.div`
   display: grid;
   grid-template-columns: 0.6fr 1fr;
   grid-gap: 30px;
-  margin-top: 60px;
 `;
 
 export const List = styled.div`
