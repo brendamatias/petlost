@@ -4,6 +4,8 @@ import { api } from '~/services/api';
 
 import { Container } from './styles';
 
+import noImage from '~/assets/no-image.png';
+
 export default function AvatarInput() {
   const { defaultValue, registerField } = useField('avatar');
 
@@ -38,12 +40,7 @@ export default function AvatarInput() {
   return (
     <Container>
       <label htmlFor="avatar">
-        <img
-          src={
-            preview || 'https://api.adorable.io/avatars/50/abott@adorable.png'
-          }
-          alt=""
-        />
+        <img src={preview || noImage} alt="" />
 
         <input
           type="file"

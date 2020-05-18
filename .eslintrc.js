@@ -18,7 +18,9 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['react', 'jsx-a11y', 'import', 'react-hooks', 'prettier'],
+  parser: 'babel-eslint',
   rules: {
+    strict: 0,
     'prettier/prettier': 'error',
     'react/jsx-filename-extension': ['error', { extensions: ['.js', '.jsx'] }],
     'import/prefer-default-export': 'off',

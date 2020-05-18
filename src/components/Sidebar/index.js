@@ -11,6 +11,8 @@ import {
 
 import { Container, Profile } from './styles';
 
+import noImage from '~/assets/no-image.png';
+
 export default function Sidebar() {
   const profile = useSelector(state => state.user.profile);
 
@@ -18,10 +20,7 @@ export default function Sidebar() {
     <Container>
       <div>
         <Profile>
-          <img
-            src="https://api.adorable.io/avatars/60/abott@adorable.png"
-            alt="Perfil"
-          />
+          <img src={profile?.avatar?.url || noImage} alt="Perfil" />
           <div>
             <strong>{profile.name}</strong>
             <span>{profile.email}</span>
