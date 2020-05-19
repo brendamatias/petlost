@@ -1,20 +1,27 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import {
   MdDashboard,
   MdForum,
   MdPerson,
   MdPets,
-  MdSettings,
+  MdArrowBack,
 } from 'react-icons/md';
+
+import { signOut } from '~/store/modules/auth/actions';
 
 import { Container, Profile } from './styles';
 
 import noImage from '~/assets/no-image.png';
 
 export default function Sidebar() {
+  const dispatch = useDispatch();
   const profile = useSelector(state => state.user.profile);
+
+  function handleSignOut() {
+    dispatch(signOut());
+  }
 
   return (
     <Container>
@@ -54,10 +61,10 @@ export default function Sidebar() {
         </ul>
       </div>
 
-      <NavLink to="/profile" activeClassName="active">
-        <MdSettings size={22} />
-        Settings
-      </NavLink>
+      <button type="button" onClick={handleSignOut}>
+        <MdArrowBack size={22} />
+        Logout
+      </button>
     </Container>
   );
 }

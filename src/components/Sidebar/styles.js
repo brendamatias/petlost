@@ -16,7 +16,13 @@ export const Container = styled.div`
     }
   }
 
-  a {
+  button {
+    background: none;
+    border: 0;
+  }
+
+  a,
+  button {
     display: flex;
     align-items: center;
     color: ${props => props.theme.colors.light};
