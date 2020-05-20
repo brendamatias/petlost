@@ -21,6 +21,7 @@ module.exports = {
   parser: 'babel-eslint',
   rules: {
     strict: 0,
+    'react/no-array-index-key': 'off',
     'prettier/prettier': 'error',
     'react/jsx-filename-extension': ['error', { extensions: ['.js', '.jsx'] }],
     'import/prefer-default-export': 'off',

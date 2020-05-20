@@ -1,13 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { MdCancel } from 'react-icons/md';
 
 import { Button } from './styles';
 
-export default function Filter({ handleSubmit, active, content }) {
+export default function Filter({ content }) {
+  const [active, setActive] = useState(false);
+
   return (
-    <Button active={active} onClick={handleSubmit}>
+    <Button
+      active={active}
+      onClick={() => {
+        setActive(!active);
+      }}
+    >
       <span>
         {content}
         <MdCancel />
@@ -17,7 +24,5 @@ export default function Filter({ handleSubmit, active, content }) {
 }
 
 Filter.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
-  active: PropTypes.bool.isRequired,
   content: PropTypes.string.isRequired,
 };
