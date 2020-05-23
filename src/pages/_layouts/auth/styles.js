@@ -33,7 +33,7 @@ export const Auth = styled.div`
     display: flex;
     flex-direction: column;
     margin-top: 30px;
-    text-align: left;
+    text-align: center;
 
     width: 300px;
 
@@ -42,6 +42,7 @@ export const Auth = styled.div`
       font-weight: 600;
       font-size: 16px;
       margin: 14px 0 6px 0;
+      text-align: left;
     }
 
     input {
@@ -63,7 +64,7 @@ export const Auth = styled.div`
       color: #e41320;
     }
 
-    h5 {
+    .forgot {
       font-size: 13px;
       margin: 8px 0 0 auto;
       color: #e9a0ad;

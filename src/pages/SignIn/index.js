@@ -40,7 +40,10 @@ export default function SignIn() {
           placeholder="••••••••"
           className="password"
         />
-        <h5>Forgot Password?</h5>
+
+        <Link to="/forgot-password" className="forgot">
+          Forgot Password?
+        </Link>
 
         <button type="submit">{loading ? 'Loading...' : 'Log in'}</button>
         <Link to="/register">Dont have an account? Create an account</Link>
