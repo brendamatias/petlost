@@ -8,6 +8,7 @@ import { signInSuccess, signFailure } from './actions';
 
 export function* signIn({ payload }) {
   try {
+    console.log('oi');
     const { email, password } = payload;
 
     const response = yield call(api.post, 'sessions', {

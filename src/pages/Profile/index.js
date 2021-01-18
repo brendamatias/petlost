@@ -33,7 +33,7 @@ export default function Profile() {
         <label htmlFor="name">Full Name</label>
         <Input name="name" />
 
-        <label htmlFor="email">Email Address</label>
+        <label htmlFor="email">E-mail</label>
         <Input name="email" />
 
         <hr />

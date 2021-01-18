@@ -68,7 +68,7 @@ export default function ResetPassword() {
         <button type="submit">{loading ? 'Loading...' : 'Recover'}</button>
       </Form>
 
-      <span>©‎2020 PetLost Studio - Brazil</span>
+      <span>©‎2020 PetLost Studio - Brasil</span>
     </>
   );
 }

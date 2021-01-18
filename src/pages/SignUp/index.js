@@ -9,13 +9,13 @@ import { signUpRequest } from '~/store/modules/auth/actions';
 import logo from '~/assets/petlost.svg';
 
 const schema = Yup.object().shape({
-  name: Yup.string().required('Name is required.'),
+  name: Yup.string().required('Nome é necessário para cadastro.'),
   email: Yup.string()
     .email('Enter a valid email.')
-    .required('Email is required.'),
+    .required('E-mail é necessário para cadastro.'),
   password: Yup.string()
     .min(6, 'At least 6 characters.')
-    .required('Password is required.'),
+    .required('Senha é necessário para cadastro.'),
 });
 
 export default function SignUp() {
@@ -32,13 +32,13 @@ export default function SignUp() {
       <Form schema={schema} onSubmit={handleSubmit}>
         <h3>Create your account</h3>
 
-        <label htmlFor="name">Full Name</label>
-        <Input name="name" type="text" placeholder="Example Name" />
+        <label htmlFor="name">Nome completo</label>
+        <Input name="name" type="text" placeholder="Nome Exemplo" />
 
-        <label htmlFor="email">Email Address</label>
-        <Input name="email" type="email" placeholder="example@mail.com" />
+        <label htmlFor="email">E-mail</label>
+        <Input name="email" type="email" placeholder="exemplo@email.com" />
 
-        <label htmlFor="password">Password</label>
+        <label htmlFor="password">Senha</label>
         <Input
           name="password"
           type="password"
@@ -46,11 +46,11 @@ export default function SignUp() {
           className="password"
         />
 
-        <button type="submit">Register</button>
-        <Link to="/">Already have an account? Please login.</Link>
+        <button type="submit">Registrar</button>
+        <Link to="/">Já tem uma conta? Por favor, faça seu login.</Link>
       </Form>
 
-      <span>©‎2020 PetLost Studio - Brazil</span>
+      <span>©‎2020 PetLost Studio - Brasil</span>
     </>
   );
 }
