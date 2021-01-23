@@ -8,15 +8,14 @@ import { signInSuccess, signFailure } from './actions';
 
 export function* signIn({ payload }) {
   try {
-    console.log('oi');
     const { email, password } = payload;
 
-    const response = yield call(api.post, 'sessions', {
+    const response = yield call(api.post, 'auth', {
       email,
       password,
     });
 
-    const { token, user } = response.data;
+    const { token, user } = response.data.data;
 
     api.defaults.headers.Authorization = `Bearer ${token}`;
 
@@ -27,7 +26,8 @@ export function* signIn({ payload }) {
     const { response } = err;
 
     toast.error(
-      response.data.error || 'Authentication failed, check your data.'
+      response.data.error?.message ||
+        'A autenticação falhou, verifique os seus dados'
     );
 
     yield put(signFailure());
@@ -45,13 +45,15 @@ export function* signUp({ payload }) {
       provider: true,
     });
 
-    toast.success('Account created successfully!');
+    toast.success('Conta criada com sucesso!');
 
     history.push('/');
   } catch (err) {
     const { response } = err;
 
-    toast.error(response.data.error || 'Registration failed, check your data.');
+    toast.error(
+      response.data.error?.message || 'O registro falhou, verifique seus dados'
+    );
 
     yield put(signFailure());
   }
