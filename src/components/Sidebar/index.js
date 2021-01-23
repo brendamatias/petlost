@@ -27,7 +27,7 @@ export default function Sidebar() {
     <Container>
       <div>
         <Profile>
-          <img src={profile?.avatar?.url || noImage} alt="Perfil" />
+          <img src={profile?.avatar_url || noImage} alt="Perfil" />
           <div>
             <strong>{profile.name}</strong>
             <span>{profile.email}</span>
