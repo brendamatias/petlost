@@ -78,11 +78,6 @@ export const Content = styled.div`
   }
 `;
 
-export const Filters = styled.div`
-  margin-bottom: 30px;
-  display: flex;
-`;
-
 export const TagsFilters = styled.div`
   display: flex;
   flex-wrap: wrap;
