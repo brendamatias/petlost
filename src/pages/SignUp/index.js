@@ -50,7 +50,7 @@ export default function SignUp() {
         <Link to="/">Já tem uma conta? Por favor, faça seu login.</Link>
       </Form>
 
-      <span>©‎2020 PetLost Studio - Brasil</span>
+      <span>©‎2020 PetLost - Brasil</span>
     </>
   );
 }

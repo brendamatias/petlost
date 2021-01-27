@@ -30,16 +30,16 @@ export default function ForgotPassword() {
       <img src={logo} alt="PetLost" />
 
       <Form schema={schema} onSubmit={handleSubmit}>
-        <h3>Recover password</h3>
+        <h3>Recuperar senha</h3>
 
         <label htmlFor="email">E-mail</label>
         <Input name="email" type="email" placeholder="exemplo@email.com" />
 
-        <button type="submit">{loading ? 'Loading...' : 'Recover'}</button>
-        <Link to="/register">Back to login</Link>
+        <button type="submit">{loading ? 'Carregando...' : 'Recuperar'}</button>
+        <Link to="/register">Volte ao login</Link>
       </Form>
 
-      <span>©‎2020 PetLost Studio - Brasil</span>
+      <span>©‎2020 PetLost - Brasil</span>
     </>
   );
 }

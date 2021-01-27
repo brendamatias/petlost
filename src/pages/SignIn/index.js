@@ -49,7 +49,7 @@ export default function SignIn() {
         <Link to="/register">Não tem conta? Criar uma conta</Link>
       </Form>
 
-      <span>©‎2020 PetLost Studio - Brasil</span>
+      <span>©‎2020 PetLost - Brasil</span>
     </>
   );
 }

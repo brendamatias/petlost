@@ -10,10 +10,10 @@ import history from '~/services/history';
 import { api } from '~/services/api';
 
 const schema = Yup.object().shape({
-  password: Yup.string().required('Password is required.'),
+  password: Yup.string().required('Senha é obrigatória'),
   confirmPassword: Yup.string().oneOf(
     [Yup.ref('password'), null],
-    'Passwords must match'
+    'As senhas devem se corresponder'
   ),
 });
 
@@ -28,7 +28,8 @@ export default function ResetPassword() {
     const token = location.search.replace('?token=', '');
 
     if (!token) {
-      toast.error('Token not valid!');
+      setLoading(false);
+      return toast.error('Token inválido!');
     }
 
     await api.put('/password/reset', {
@@ -37,8 +38,7 @@ export default function ResetPassword() {
       confirmPassword,
     });
 
-    toast.success('Password updated successfully!');
-    setLoading(false);
+    toast.success('Senha atualizada com sucesso!');
     history.push('/');
   }
 
@@ -47,9 +47,9 @@ export default function ResetPassword() {
       <img src={logo} alt="PetLost" />
 
       <Form schema={schema} onSubmit={handleSubmit}>
-        <h3>Reset password</h3>
+        <h3>Redefinir senha</h3>
 
-        <label htmlForm="password">New password</label>
+        <label htmlForm="password">Nova senha</label>
         <Input
           name="password"
           type="password"
@@ -57,7 +57,7 @@ export default function ResetPassword() {
           className="password"
         />
 
-        <label htmlForm="password">Password confirmation</label>
+        <label htmlForm="password">Confirmação de senha</label>
         <Input
           name="confirmPassword"
           type="password"
@@ -65,10 +65,10 @@ export default function ResetPassword() {
           className="password"
         />
 
-        <button type="submit">{loading ? 'Loading...' : 'Recover'}</button>
+        <button type="submit">{loading ? 'Carregando...' : 'Redefinir'}</button>
       </Form>
 
-      <span>©‎2020 PetLost Studio - Brasil</span>
+      <span>©‎2020 PetLost - Brasil</span>
     </>
   );
 }

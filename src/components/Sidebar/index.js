@@ -53,7 +53,7 @@ export default function Sidebar() {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/registeredpets">
+            <NavLink to="/registeredpets" className="disabled-link">
               <MdPets size={22} />
               Meus pets
             </NavLink>
