@@ -29,7 +29,7 @@ export const Container = styled.div`
     font-size: 16px;
     font-weight: 600;
     transition: opacity 0.2s;
-    opacity: 0.5;
+    opacity: 0.6;
 
     &:hover {
       opacity: 1;
@@ -42,6 +42,11 @@ export const Container = styled.div`
 
   .active {
     opacity: 1;
+  }
+
+  .disabled-link {
+    pointer-events: none;
+    opacity: 0.2;
   }
 `;
 

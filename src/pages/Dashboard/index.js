@@ -76,7 +76,7 @@ export default function Dashboard() {
 
   return (
     <Container>
-      <h1>Pets</h1>
+      <h1>Início</h1>
       <Content>
         <MultiSelect
           name="Tipo"
