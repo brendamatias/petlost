@@ -17,12 +17,21 @@ export default function ForgotPassword() {
   const [loading, setLoading] = useState(false);
 
   async function handleSubmit({ email }) {
-    setLoading(true);
-    await api.post('/password/forgot', email);
+    try {
+      setLoading(true);
+      await api.post('/password/forgot', { email });
 
-    toast.success('Recovery email sent! Check your message box.');
+      toast.success(
+        'Email de recuperação enviado! Verifique sua caixa de mensagem.'
+      );
 
-    setLoading(false);
+      setLoading(false);
+    } catch (err) {
+      const { response } = err;
+
+      toast.error(response.data.error?.message || 'Ocorreu um erro interno');
+      setLoading(false);
+    }
   }
 
   return (
@@ -30,16 +39,16 @@ export default function ForgotPassword() {
       <img src={logo} alt="PetLost" />
 
       <Form schema={schema} onSubmit={handleSubmit}>
-        <h3>Recover password</h3>
+        <h3>Recuperar senha</h3>
 
-        <label htmlFor="email">Email Address</label>
-        <Input name="email" type="email" placeholder="example@mail.com" />
+        <label htmlFor="email">E-mail</label>
+        <Input name="email" type="email" placeholder="exemplo@email.com" />
 
-        <button type="submit">{loading ? 'Loading...' : 'Recover'}</button>
-        <Link to="/register">Back to login</Link>
+        <button type="submit">{loading ? 'Carregando...' : 'Recuperar'}</button>
+        <Link to="/register">Volte ao login</Link>
       </Form>
 
-      <span>©‎2020 PetLost Studio - Brazil</span>
+      <span>©‎2020 PetLost - Brasil</span>
     </>
   );
 }

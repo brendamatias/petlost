@@ -28,12 +28,12 @@ export default function SignIn() {
       <img src={logo} alt="PetLost" />
 
       <Form schema={schema} onSubmit={handleSubmit}>
-        <h3>Log into your account</h3>
+        <h3>Acesse sua conta</h3>
 
-        <label htmlFor="email">Email Address</label>
-        <Input name="email" type="email" placeholder="example@mail.com" />
+        <label htmlFor="email">E-mail</label>
+        <Input name="email" type="email" placeholder="exemplo@email.com" />
 
-        <label htmlForm="password">Password</label>
+        <label htmlForm="password">Senha</label>
         <Input
           name="password"
           type="password"
@@ -42,14 +42,14 @@ export default function SignIn() {
         />
 
         <Link to="/forgot-password" className="forgot">
-          Forgot Password?
+          Esqueceu sua senha?
         </Link>
 
-        <button type="submit">{loading ? 'Loading...' : 'Log in'}</button>
-        <Link to="/register">Dont have an account? Create an account</Link>
+        <button type="submit">{loading ? 'Carregando...' : 'Entrar'}</button>
+        <Link to="/register">Não tem conta? Criar uma conta</Link>
       </Form>
 
-      <span>©‎2020 PetLost Studio - Brazil</span>
+      <span>©‎2020 PetLost - Brasil</span>
     </>
   );
 }

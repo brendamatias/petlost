@@ -27,7 +27,7 @@ export default function Sidebar() {
     <Container>
       <div>
         <Profile>
-          <img src={profile?.avatar?.url || noImage} alt="Perfil" />
+          <img src={profile?.avatar_url || noImage} alt="Perfil" />
           <div>
             <strong>{profile.name}</strong>
             <span>{profile.email}</span>
@@ -35,27 +35,27 @@ export default function Sidebar() {
         </Profile>
         <ul>
           <li>
-            <NavLink to="/dashboard" activeClassName="active">
+            <NavLink to="/dashboard">
               <MdDashboard size={22} />
-              Dashboard
+              Início
             </NavLink>
           </li>
           <li>
-            <NavLink to="/messages" activeClassName="active">
+            <NavLink to="/messages" className="disabled-link">
               <MdForum size={22} />
-              Messages
+              Mensagens
             </NavLink>
           </li>
           <li>
-            <NavLink to="/profile" activeClassName="active">
+            <NavLink to="/profile">
               <MdPerson size={22} />
-              Profile
+              Perfil
             </NavLink>
           </li>
           <li>
-            <NavLink to="/registeredpets" activeClassName="active">
+            <NavLink to="/registeredpets" className="disabled-link">
               <MdPets size={22} />
-              Registered Pets
+              Meus pets
             </NavLink>
           </li>
         </ul>
@@ -63,7 +63,7 @@ export default function Sidebar() {
 
       <button type="button" onClick={handleSignOut}>
         <MdArrowBack size={22} />
-        Logout
+        Sair
       </button>
     </Container>
   );
