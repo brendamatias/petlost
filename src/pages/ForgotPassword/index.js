@@ -17,12 +17,21 @@ export default function ForgotPassword() {
   const [loading, setLoading] = useState(false);
 
   async function handleSubmit({ email }) {
-    setLoading(true);
-    await api.post('/password/forgot', email);
+    try {
+      setLoading(true);
+      await api.post('/password/forgot', { email });
 
-    toast.success('Recovery email sent! Check your message box.');
+      toast.success(
+        'Email de recuperação enviado! Verifique sua caixa de mensagem.'
+      );
 
-    setLoading(false);
+      setLoading(false);
+    } catch (err) {
+      const { response } = err;
+
+      toast.error(response.data.error?.message || 'Ocorreu um erro interno');
+      setLoading(false);
+    }
   }
 
   return (

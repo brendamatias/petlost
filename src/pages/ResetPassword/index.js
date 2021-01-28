@@ -39,7 +39,7 @@ export default function ResetPassword() {
     });
 
     toast.success('Senha atualizada com sucesso!');
-    history.push('/');
+    return history.push('/');
   }
 
   return (
