@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { darken } from 'polished';
 
-import home from '~/assets/home.jpg';
+import home from '~/assets/home-min.jpg';
 
 export const Wrapper = styled.div`
   height: 100%;
