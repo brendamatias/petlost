@@ -44,6 +44,8 @@ export default function Dashboard() {
       } else {
         filterParams = `${filterParams}&situation=${filter.value}`;
       }
+
+      return filterParams;
     });
 
     setFilters(filterParams ? `?${filterParams}` : '');
@@ -52,6 +54,7 @@ export default function Dashboard() {
   useEffect(() => {
     async function loadPets() {
       setLoading(true);
+      setPage(1); // remover
 
       const { data } = await api.get(`pets${filters}`, {
         params: {

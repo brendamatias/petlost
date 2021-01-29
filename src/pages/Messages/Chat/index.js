@@ -14,7 +14,7 @@ import {
 
 import SecondaryLoading from '~/components/SecondaryLoading';
 
-import { api, socket } from '~/services/api';
+import { api } from '~/services/api';
 
 export default function Chat({ from, fromId, keyChat }) {
   const profile = useSelector(state => state.user.profile);
@@ -35,9 +35,9 @@ export default function Chat({ from, fromId, keyChat }) {
     }
 
     async function loadChat() {
-      socket.on('received', () => {
-        getMessages();
-      });
+      // socket.on('received', () => {
+      //   getMessages();
+      // });
 
       getMessages();
     }
@@ -53,7 +53,7 @@ export default function Chat({ from, fromId, keyChat }) {
       recipient: fromId,
     };
 
-    socket.emit('sendMessage', messageObject);
+    // socket.emit('sendMessage', messageObject);
 
     setMessages([...messages, messageObject]);
 
