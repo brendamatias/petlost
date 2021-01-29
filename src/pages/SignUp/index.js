@@ -30,15 +30,15 @@ export default function SignUp() {
       <img src={logo} alt="PetLost" />
 
       <Form schema={schema} onSubmit={handleSubmit}>
-        <h3>Create your account</h3>
+        <h3>crie sua conta</h3>
 
-        <label htmlFor="name">Nome completo</label>
+        <label htmlFor="name">nome completo</label>
         <Input name="name" type="text" placeholder="Nome Exemplo" />
 
-        <label htmlFor="email">E-mail</label>
+        <label htmlFor="email">e-mail</label>
         <Input name="email" type="email" placeholder="exemplo@email.com" />
 
-        <label htmlFor="password">Senha</label>
+        <label htmlFor="password">senha</label>
         <Input
           name="password"
           type="password"
@@ -46,8 +46,8 @@ export default function SignUp() {
           className="password"
         />
 
-        <button type="submit">Registrar</button>
-        <Link to="/">Já tem uma conta? Por favor, faça seu login.</Link>
+        <button type="submit">registrar</button>
+        <Link to="/">já tem uma conta? por favor, faça seu login.</Link>
       </Form>
 
       <span>©‎2020 PetLost - Brasil</span>
