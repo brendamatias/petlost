@@ -37,25 +37,25 @@ export default function Sidebar() {
           <li>
             <NavLink to="/dashboard">
               <MdDashboard size={22} />
-              Início
+              início
             </NavLink>
           </li>
           <li>
             <NavLink to="/messages" className="disabled-link">
               <MdForum size={22} />
-              Mensagens
+              mensagens
             </NavLink>
           </li>
           <li>
             <NavLink to="/profile">
               <MdPerson size={22} />
-              Perfil
+              perfil
             </NavLink>
           </li>
           <li>
             <NavLink to="/registeredpets" className="disabled-link">
               <MdPets size={22} />
-              Meus pets
+              meus pets
             </NavLink>
           </li>
         </ul>
@@ -63,7 +63,7 @@ export default function Sidebar() {
 
       <button type="button" onClick={handleSignOut}>
         <MdArrowBack size={22} />
-        Sair
+        sair
       </button>
     </Container>
   );

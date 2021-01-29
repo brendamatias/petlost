@@ -9,7 +9,7 @@ export default function MultiSelect({ name, options, onChange }) {
     <Div>
       <Select
         name={name}
-        placeholder="Filtros"
+        placeholder="filtros"
         options={options}
         isMulti
         onChange={values => onChange(values)}

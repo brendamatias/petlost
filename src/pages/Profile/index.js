@@ -20,7 +20,7 @@ export default function Profile() {
 
   return (
     <Container>
-      <h1>Perfil</h1>
+      <h1>perfil</h1>
 
       <Form initialData={profile} onSubmit={handleSubmit}>
         <div>
@@ -36,24 +36,24 @@ export default function Profile() {
           </div>
         </div>
 
-        <label htmlFor="name">Nome Completo</label>
+        <label htmlFor="name">nome completo</label>
         <Input name="name" />
 
-        <label htmlFor="email">E-mail</label>
+        <label htmlFor="email">e-mail</label>
         <Input name="email" />
 
         <hr />
 
-        <label htmlFor="oldPassword">Senha anterior</label>
+        <label htmlFor="oldPassword">senha anterior</label>
         <Input name="oldPassword" type="password" />
 
-        <label htmlFor="password">Nova senha</label>
+        <label htmlFor="password">nova senha</label>
         <Input name="password" type="password" />
 
-        <label htmlFor="confirmPassword">Confirmação de senha</label>
+        <label htmlFor="confirmPassword">confirmação de senha</label>
         <Input name="confirmPassword" type="password" />
 
-        <button type="submit">Atualizar perfil</button>
+        <button type="submit">atualizar perfil</button>
       </Form>
     </Container>
   );

@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 import { MdLocationOn, MdFavorite } from 'react-icons/md';
 import { Container, Content, TagsFilters, TagFilter } from './styles';
 
+import Loading from '~/components/Loading';
 import MultiSelect from '~/components/MultiSelect';
 
 import { api } from '~/services/api';
@@ -53,49 +55,56 @@ export default function Dashboard() {
 
   useEffect(() => {
     async function loadPets() {
-      setLoading(true);
-      setPage(1); // remover
+      try {
+        setLoading(true);
+        setPage(1); // remover
 
-      const { data } = await api.get(`pets${filters}`, {
-        params: {
-          page,
-        },
-      });
+        const { data } = await api.get(`pets${filters}`, {
+          params: {
+            page,
+          },
+        });
 
-      let petsData = [];
+        let petsData = [];
 
-      if (data.data.length) {
-        petsData = data.data.map(pet => ({
-          ...pet,
-          filters: [pet.situation, pet.type],
-        }));
+        if (data.data.length) {
+          petsData = data.data.map(pet => ({
+            ...pet,
+            filters: [pet.situation, pet.type],
+          }));
+        }
+
+        setPets(petsData);
+        setLoading(false);
+      } catch (err) {
+        const { response } = err;
+
+        toast.error(response.data.error?.message || 'Ocorreu um erro interno');
+        setLoading(false);
       }
-
-      setPets(petsData);
-      setLoading(false);
     }
     loadPets();
   }, [page, filters]);
 
   return (
     <Container>
-      <h1>Início</h1>
+      <h1>início</h1>
       <Content>
         <MultiSelect
           name="Tipo"
           options={[
-            { label: 'Cachorro', value: 'dog' },
-            { label: 'Gato', value: 'cat' },
+            { label: 'cachorro', value: 'dog' },
+            { label: 'gato', value: 'cat' },
           ]}
           onChange={onChangeFilters}
         />
-        <ul>
+        <>
           {loading ? (
-            <h1>loading</h1>
+            <Loading />
           ) : (
             <>
               {pets.length > 0 ? (
-                <>
+                <ul>
                   {pets.map(pet => (
                     <li key={pet.id}>
                       <button type="submit">
@@ -119,13 +128,15 @@ export default function Dashboard() {
                       </div>
                     </li>
                   ))}
-                </>
+                </ul>
               ) : (
-                <h2>Ops, não temos pets cadastrados no momento</h2>
+                <div className="no-pets">
+                  <h2>ops, não temos pets cadastrados no momento</h2>
+                </div>
               )}
             </>
           )}
-        </ul>
+        </>
       </Content>
     </Container>
   );

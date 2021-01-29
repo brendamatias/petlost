@@ -43,15 +43,14 @@ const loader = keyframes`
 `;
 
 export const Container = styled.div`
-  position: fixed;
-  top: 50%;
-  left: 50%;
+  position: absolute;
+  top: 0%;
+  right: 0%;
+  left: 0%;
 
   .progress-bar {
-    border-radius: 60px;
     overflow: hidden;
     max-width: 100%;
-    width: 300px;
 
     span {
       display: block;

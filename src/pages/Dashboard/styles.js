@@ -1,7 +1,11 @@
 import styled from 'styled-components';
 import { lighten } from 'polished';
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  .no-pets {
+    text-align: center;
+  }
+`;
 
 export const Content = styled.div`
   ul {
