@@ -1,25 +1,26 @@
 import React from 'react';
 import PropTypes, { object } from 'prop-types';
-import Select from 'react-select';
 
-import { Div } from './styles';
+import { Content } from './styles';
 
-export default function MultiSelect({ name, options, onChange }) {
+export default function MultiSelect({ name, options }) {
   return (
-    <Div>
-      <Select
-        name={name}
-        placeholder="filtros"
-        options={options}
-        isMulti
-        onChange={values => onChange(values)}
-      />
-    </Div>
+    <Content>
+      <span>{name}</span>
+      <div className="options">
+        {options.map((option, key) => (
+          <label htmlFor={option.value} key={key}>
+            <input type="checkbox" name={option.value} value={option.value} />
+            <span>{option.label}</span>
+          </label>
+        ))}
+      </div>
+    </Content>
   );
 }
 
 MultiSelect.propTypes = {
   name: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(object).isRequired,
-  onChange: PropTypes.oneOfType([PropTypes.func]).isRequired,
+  // onChange: PropTypes.oneOfType([PropTypes.func]).isRequired,
 };
