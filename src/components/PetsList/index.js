@@ -6,7 +6,7 @@ import { TagsFilters, TagFilter } from './styles';
 
 import noImage from '~/assets/no-image.png';
 
-export default function MultiSelect({ pets }) {
+export default function PetList({ pets }) {
   function returnColor(filter) {
     if (filter === 'dog') return '#C24F00';
     if (filter === 'cat') return '#4501BD';
@@ -61,6 +61,6 @@ export default function MultiSelect({ pets }) {
   );
 }
 
-MultiSelect.propTypes = {
+PetList.propTypes = {
   pets: PropTypes.arrayOf(object).isRequired,
 };
