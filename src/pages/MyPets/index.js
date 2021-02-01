@@ -9,6 +9,7 @@ import Loading from '~/components/Loading';
 import Header from '~/components/Header';
 import Button from '~/components/Button';
 import PetsList from '~/components/PetsList';
+import Pagination from '~/components/Pagination';
 
 import { api } from '~/services/api';
 
@@ -72,6 +73,7 @@ export default function MyPets() {
             </>
           )}
         </>
+        <Pagination />
       </Content>
     </Container>
   );
