@@ -6,9 +6,9 @@ import { Container } from './styles';
 
 export default function Pagination({ pagination }) {
   function getPages() {
-    const pages = [];
+    const pages = [1];
 
-    for (let i = 1; i <= pagination.lastPage; i++) {
+    for (let i = 2; i <= pagination.lastPage; i++) {
       pages.push(i);
     }
 

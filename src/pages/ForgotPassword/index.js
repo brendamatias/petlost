@@ -29,7 +29,7 @@ export default function ForgotPassword() {
     } catch (err) {
       const { response } = err;
 
-      toast.error(response.data.error?.message || 'Ocorreu um erro interno');
+      toast.error(response?.data?.error?.message || 'Ocorreu um erro interno');
       setLoading(false);
     }
   }

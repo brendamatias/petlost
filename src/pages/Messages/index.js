@@ -37,7 +37,7 @@ export default function Messages() {
       setKeyChat('');
 
       toast.error(
-        response.data.error?.message || 'Oops, server error. Try again later.'
+        response?.data?.error?.message || 'Oops, server error. Try again later.'
       );
     }
   }

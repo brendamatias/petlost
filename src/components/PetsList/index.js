@@ -54,7 +54,7 @@ export default function PetList({ pets }) {
         </ul>
       ) : (
         <div className="no-pets">
-          <h2>ops, você não tem pets cadastrados no momento</h2>
+          {/* <h2>ops, você não tem pets cadastrados no momento</h2> */}
         </div>
       )}
     </>

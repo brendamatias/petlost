@@ -44,7 +44,9 @@ export default function Dashboard() {
       } catch (err) {
         const { response } = err;
 
-        toast.error(response.data.error?.message || 'Ocorreu um erro interno');
+        toast.error(
+          response?.data?.error?.message || 'Ocorreu um erro interno'
+        );
         setLoading(false);
       }
     }
@@ -53,22 +55,19 @@ export default function Dashboard() {
 
   return (
     <Container>
+      {loading && <Loading />}
       <h1>início</h1>
-      {loading ? (
-        <Loading />
-      ) : (
-        <Content>
-          <div>
-            <Header filters={filters} setFilters={setFilters}>
-              <Button>
-                <NavLink to="/my-pets">adicionar pet</NavLink>
-              </Button>
-            </Header>
-            <PetsList pets={pets} />
-          </div>
-          <Pagination pagination={pagination} />
-        </Content>
-      )}
+      <Content>
+        <div>
+          <Header filters={filters} setFilters={setFilters}>
+            <Button>
+              <NavLink to="/my-pets">adicionar pet</NavLink>
+            </Button>
+          </Header>
+          <PetsList pets={pets} />
+        </div>
+        <Pagination pagination={pagination} />
+      </Content>
     </Container>
   );
 }

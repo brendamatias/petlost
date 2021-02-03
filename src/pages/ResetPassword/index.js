@@ -49,7 +49,7 @@ export default function ResetPassword() {
       <Form schema={schema} onSubmit={handleSubmit}>
         <h3>Redefinir senha</h3>
 
-        <label htmlForm="password">Nova senha</label>
+        <label htmlFor="password">Nova senha</label>
         <Input
           name="password"
           type="password"
@@ -57,7 +57,7 @@ export default function ResetPassword() {
           className="password"
         />
 
-        <label htmlForm="password">Confirmação de senha</label>
+        <label htmlFor="password">Confirmação de senha</label>
         <Input
           name="confirmPassword"
           type="password"

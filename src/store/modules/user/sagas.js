@@ -30,7 +30,7 @@ export function* updateProfile({ payload }) {
     const { response } = err;
 
     toast.error(
-      response.data.error?.message ||
+      response?.data?.error?.message ||
         'Erro ao atualizar o perfil, verifique seus dados'
     );
 

@@ -33,7 +33,7 @@ export default function SignIn() {
         <label htmlFor="email">e-mail</label>
         <Input name="email" type="email" placeholder="exemplo@email.com" />
 
-        <label htmlForm="password">senha</label>
+        <label htmlFor="password">senha</label>
         <Input
           name="password"
           type="password"
