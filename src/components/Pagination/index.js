@@ -1,12 +1,22 @@
 import React, { useState } from 'react';
+import PropTypes, { any } from 'prop-types';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 
 import { Container } from './styles';
 
-export default function Pagination() {
-  const [page, setPage] = useState(1);
+export default function Pagination({ pagination }) {
+  function getPages() {
+    const pages = [];
 
-  const pages = [1, 2, 3, 4];
+    for (let i = 1; i <= pagination.lastPage; i++) {
+      pages.push(i);
+    }
+
+    return pages;
+  }
+
+  const [page, setPage] = useState(1);
+  const [pages] = useState(getPages());
 
   function changePage(value) {
     let newValue = page + value;
@@ -47,3 +57,7 @@ export default function Pagination() {
     </Container>
   );
 }
+
+Pagination.propTypes = {
+  pagination: PropTypes.objectOf(any).isRequired,
+};
