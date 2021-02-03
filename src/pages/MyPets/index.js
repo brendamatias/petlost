@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-import { Container, Content } from './styles';
+import { Container, Content } from '~/styles/dashboard';
 
-import Loading from '~/components/Loading';
 import Header from '~/components/Header';
 import Button from '~/components/Button';
+import Loading from '~/components/Loading';
 import PetsList from '~/components/PetsList';
 import Pagination from '~/components/Pagination';
 
@@ -17,7 +17,7 @@ export default function MyPets() {
   const profile = useSelector(state => state.user.profile);
 
   const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(1);
+  const [pagination, setPagination] = useState({});
   const [filters, setFilters] = useState([]);
   const [pets, setPets] = useState([]);
 
@@ -25,11 +25,10 @@ export default function MyPets() {
     async function loadPets() {
       try {
         setLoading(true);
-        setPage(1); // remover
 
-        const { data } = await api.get(`pets${filters}`, {
+        const { data } = await api.get(`pets`, {
           params: {
-            page,
+            page: 1,
             user_id: profile.id,
           },
         });
@@ -43,6 +42,7 @@ export default function MyPets() {
           }));
         }
 
+        setPagination(data?.pagination);
         setPets(petsData);
         setLoading(false);
       } catch (err) {
@@ -53,28 +53,26 @@ export default function MyPets() {
       }
     }
     loadPets();
-  }, [page, filters, profile.id]);
+  }, [filters, profile.id]);
 
   return (
     <Container>
       <h1>meus pets</h1>
-      <Content>
-        <Header>
-          <Button>
-            <NavLink to="/my-pets">adicionar pet</NavLink>
-          </Button>
-        </Header>
-        <>
-          {loading ? (
-            <Loading />
-          ) : (
-            <>
-              <PetsList pets={pets} />
-            </>
-          )}
-        </>
-        <Pagination />
-      </Content>
+      {loading ? (
+        <Loading />
+      ) : (
+        <Content>
+          <div>
+            <Header filters={filters} setFilters={setFilters}>
+              <Button>
+                <NavLink to="/my-pets">adicionar pet</NavLink>
+              </Button>
+            </Header>
+            <PetsList pets={pets} />
+          </div>
+          <Pagination pagination={pagination} />
+        </Content>
+      )}
     </Container>
   );
 }

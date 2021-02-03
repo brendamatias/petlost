@@ -7,6 +7,11 @@ export const Container = styled.div`
 `;
 
 export const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: calc(100% - 60px - 24px - 24px);
+
   ul {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));

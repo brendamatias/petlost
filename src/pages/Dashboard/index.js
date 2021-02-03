@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
+import { NavLink } from 'react-router-dom';
 
-import { Container, Content } from './styles';
+import { Container, Content } from '~/styles/dashboard';
 
-import Loading from '~/components/Loading';
 import Header from '~/components/Header';
+import Button from '~/components/Button';
+import Loading from '~/components/Loading';
 import PetsList from '~/components/PetsList';
+import Pagination from '~/components/Pagination';
 
 import { api } from '~/services/api';
 
 export default function Dashboard() {
   const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(1);
+  const [pagination, setPagination] = useState({});
   const [filters, setFilters] = useState([]);
   const [pets, setPets] = useState([]);
 
@@ -19,11 +22,10 @@ export default function Dashboard() {
     async function loadPets() {
       try {
         setLoading(true);
-        setPage(1); // remover
 
         const { data } = await api.get(`pets${filters}`, {
           params: {
-            page,
+            page: 1,
           },
         });
 
@@ -37,6 +39,7 @@ export default function Dashboard() {
         }
 
         setPets(petsData);
+        setPagination(data?.pagination);
         setLoading(false);
       } catch (err) {
         const { response } = err;
@@ -46,23 +49,26 @@ export default function Dashboard() {
       }
     }
     loadPets();
-  }, [page, filters]);
+  }, [filters]);
 
   return (
     <Container>
       <h1>início</h1>
-      <Content>
-        <Header />
-        <>
-          {loading ? (
-            <Loading />
-          ) : (
-            <>
-              <PetsList pets={pets} />
-            </>
-          )}
-        </>
-      </Content>
+      {loading ? (
+        <Loading />
+      ) : (
+        <Content>
+          <div>
+            <Header filters={filters} setFilters={setFilters}>
+              <Button>
+                <NavLink to="/my-pets">adicionar pet</NavLink>
+              </Button>
+            </Header>
+            <PetsList pets={pets} />
+          </div>
+          <Pagination pagination={pagination} />
+        </Content>
+      )}
     </Container>
   );
 }

@@ -9,7 +9,12 @@ export const Wrapper = styled.div`
 `;
 
 export const Content = styled.div`
+  height: 100%;
   padding: 60px 80px;
+
+  > div {
+    height: 100%;
+  }
 
   h1 {
     color: ${props => props.theme.colors.textPrimary};
