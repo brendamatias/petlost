@@ -5,7 +5,7 @@ export const Content = styled.div`
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 50px;
+  margin-bottom: 40px;
 
   > div {
     display: flex;

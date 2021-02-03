@@ -1,12 +1,29 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { string } from 'prop-types';
 
 import { MdSearch } from 'react-icons/md';
-import MultiSelect from '~/components/MultiSelect';
 import { Content, Search } from './styles';
 
-export default function Header({ children }) {
-  const filters = [
+import Filter from '~/components/Filter';
+
+export default function Header({ filters, setFilters, children }) {
+  function changeFilters({ target }) {
+    const newFilters = filters;
+
+    if (target.checked) {
+      newFilters.push(`${target.name}.${target.value}`);
+    } else {
+      const index = newFilters.indexOf(`${target.name}.${target.value}`);
+
+      if (index > -1) {
+        newFilters.splice(index, 1);
+      }
+    }
+
+    setFilters(newFilters);
+  }
+
+  const filtersObject = [
     {
       name: 'tipo',
       options: [
@@ -27,14 +44,16 @@ export default function Header({ children }) {
   return (
     <Content>
       <div>
-        {filters.map((filter, key) => (
-          <MultiSelect
+        {filters}
+        {filtersObject.map((filter, key) => (
+          <Filter
             name={filter.name}
             options={filter.options}
-            onChange={filter.onChange}
+            changeFilters={changeFilters}
             key={key}
           />
         ))}
+
         <Search>
           <MdSearch size={22} color="#b1b1b1" />
           <input placeholder="pesquisar" />
@@ -47,5 +66,7 @@ export default function Header({ children }) {
 }
 
 Header.propTypes = {
+  filters: PropTypes.arrayOf(string).isRequired,
+  setFilters: PropTypes.oneOfType([PropTypes.func]).isRequired,
   children: PropTypes.element.isRequired,
 };
