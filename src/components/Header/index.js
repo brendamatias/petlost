@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes, { string } from 'prop-types';
+import PropTypes from 'prop-types';
 
 import { MdSearch } from 'react-icons/md';
 import { Content, Search } from './styles';
@@ -7,25 +7,10 @@ import { Content, Search } from './styles';
 import Filter from '~/components/Filter';
 
 export default function Header({ filters, setFilters, children }) {
-  function changeFilters({ target }) {
-    const newFilters = filters;
-
-    if (target.checked) {
-      newFilters.push(`${target.name}.${target.value}`);
-    } else {
-      const index = newFilters.indexOf(`${target.name}.${target.value}`);
-
-      if (index > -1) {
-        newFilters.splice(index, 1);
-      }
-    }
-
-    setFilters(newFilters);
-  }
-
   const filtersObject = [
     {
       name: 'tipo',
+      key: 'type',
       options: [
         { label: 'cachorro', value: 'dog' },
         { label: 'gato', value: 'cat' },
@@ -33,6 +18,7 @@ export default function Header({ filters, setFilters, children }) {
     },
     {
       name: 'situação',
+      key: 'situation',
       options: [
         { label: 'adoção', value: 'adoption' },
         { label: 'desaparecido', value: 'disappeared' },
@@ -44,12 +30,13 @@ export default function Header({ filters, setFilters, children }) {
   return (
     <Content>
       <div>
-        {filters}
         {filtersObject.map((filter, key) => (
           <Filter
             name={filter.name}
+            keyFilter={filter.key}
             options={filter.options}
-            changeFilters={changeFilters}
+            filters={filters}
+            setFilters={setFilters}
             key={key}
           />
         ))}
@@ -66,7 +53,7 @@ export default function Header({ filters, setFilters, children }) {
 }
 
 Header.propTypes = {
-  filters: PropTypes.arrayOf(string).isRequired,
+  filters: PropTypes.string.isRequired,
   setFilters: PropTypes.oneOfType([PropTypes.func]).isRequired,
   children: PropTypes.element.isRequired,
 };
