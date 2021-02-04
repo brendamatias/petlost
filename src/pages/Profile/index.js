@@ -1,3 +1,5 @@
+import * as Yup from 'yup';
+
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, Input } from '@rocketseat/unform';
@@ -7,6 +9,31 @@ import { updateProfileRequest } from '~/store/modules/user/actions';
 import AvatarInput from './AvatarInput';
 
 import { Container } from './styles';
+
+const schema = Yup.object().shape({
+  name: Yup.string()
+    .trim()
+    .required('Nome é necessário para atualização de perfil'),
+  email: Yup.string()
+    .trim()
+    .email('Informe um e-mail válido')
+    .required('E-mail é necessário para atualização de perfil'),
+  oldPassword: Yup.string().trim(),
+  password: Yup.string()
+    .trim()
+    .when('oldPassword', (oldPasswordV, field) =>
+      oldPasswordV ? field.required('A senha é obrigatória') : field
+    ),
+  confirmPassword: Yup.string()
+    .trim()
+    .when('password', (passwordV, field) =>
+      passwordV
+        ? field
+            .required('A confirmação de senha é obrigatória')
+            .oneOf([Yup.ref('password')], 'As senhas devem se corresponder')
+        : field
+    ),
+});
 
 export default function Profile() {
   const dispatch = useDispatch();
@@ -22,7 +49,7 @@ export default function Profile() {
     <Container>
       <h1>perfil</h1>
 
-      <Form initialData={profile} onSubmit={handleSubmit}>
+      <Form schema={schema} initialData={profile} onSubmit={handleSubmit}>
         <div>
           <AvatarInput
             name="avatar"

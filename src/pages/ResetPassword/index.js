@@ -10,11 +10,12 @@ import history from '~/services/history';
 import { api } from '~/services/api';
 
 const schema = Yup.object().shape({
-  password: Yup.string().required('Senha é obrigatória'),
-  confirmPassword: Yup.string().oneOf(
-    [Yup.ref('password'), null],
-    'As senhas devem se corresponder'
-  ),
+  password: Yup.string()
+    .trim()
+    .required('Senha é obrigatória'),
+  confirmPassword: Yup.string()
+    .trim()
+    .oneOf([Yup.ref('password'), null], 'As senhas devem se corresponder'),
 });
 
 export default function ResetPassword() {

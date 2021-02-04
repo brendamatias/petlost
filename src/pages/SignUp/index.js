@@ -9,13 +9,17 @@ import { signUpRequest } from '~/store/modules/auth/actions';
 import logo from '~/assets/petlost.svg';
 
 const schema = Yup.object().shape({
-  name: Yup.string().required('Nome é necessário para cadastro.'),
+  name: Yup.string()
+    .trim()
+    .required('Nome é necessário para cadastro'),
   email: Yup.string()
-    .email('Enter a valid email.')
-    .required('E-mail é necessário para cadastro.'),
+    .trim()
+    .email('Informe um e-mail válido')
+    .required('E-mail é necessário para cadastro'),
   password: Yup.string()
-    .min(6, 'At least 6 characters.')
-    .required('Senha é necessário para cadastro.'),
+    .trim()
+    .min(6, 'A senha deve conter no mínimo 6 caracteres')
+    .required('Senha é necessária para cadastro'),
 });
 
 export default function SignUp() {

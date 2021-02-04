@@ -9,8 +9,9 @@ import { api } from '~/services/api';
 
 const schema = Yup.object().shape({
   email: Yup.string()
-    .email('Enter a valid email.')
-    .required('Email is required.'),
+    .trim()
+    .email('Informe um e-mail válido')
+    .required('E-mail é necessário para cadastro'),
 });
 
 export default function ForgotPassword() {
