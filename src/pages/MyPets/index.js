@@ -1,7 +1,9 @@
+import qs from 'qs';
+
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
 import { Container, Content } from '~/styles/dashboard';
 
@@ -11,51 +13,39 @@ import Loading from '~/components/Loading';
 import PetsList from '~/components/PetsList';
 import Pagination from '~/components/Pagination';
 
-import { api } from '~/services/api';
+import { getPetsRequest } from '~/store/modules/pets/actions';
 
 export default function MyPets() {
+  const dispatch = useDispatch();
   const profile = useSelector(state => state.user.profile);
+  const loading = useSelector(state => state.pets.loading);
+  const pets = useSelector(state => state.pets.data);
 
-  const [loading, setLoading] = useState(false);
-  const [pagination, setPagination] = useState({});
-  const [filters, setFilters] = useState([]);
-  const [pets, setPets] = useState([]);
+  const [filters, setFilters] = useState('');
 
   useEffect(() => {
     async function loadPets() {
       try {
-        setLoading(true);
+        const filtersQsParse = qs.parse(filters, { delimiter: /[,]/ });
 
-        const { data } = await api.get(`pets`, {
-          params: {
+        dispatch(
+          getPetsRequest({
             page: 1,
             user_id: profile.id,
-          },
-        });
-
-        let petsData = [];
-
-        if (data.data.length) {
-          petsData = data.data.map(pet => ({
-            ...pet,
-            filters: [pet.situation, pet.type],
-          }));
-        }
-
-        setPagination(data?.pagination);
-        setPets(petsData);
-        setLoading(false);
+            type: filtersQsParse.type,
+            situation: filtersQsParse.situation,
+          })
+        );
       } catch (err) {
         const { response } = err;
 
         toast.error(
           response?.data?.error?.message || 'Ocorreu um erro interno'
         );
-        setLoading(false);
       }
     }
     loadPets();
-  }, [filters, profile.id]);
+  }, [dispatch, filters, profile.id]);
 
   return (
     <Container>
@@ -70,7 +60,7 @@ export default function MyPets() {
           </Header>
           <PetsList pets={pets} />
         </div>
-        <Pagination pagination={pagination} />
+        <Pagination />
       </Content>
     </Container>
   );

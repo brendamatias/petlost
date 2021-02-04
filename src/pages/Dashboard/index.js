@@ -1,4 +1,7 @@
+import qs from 'qs';
+
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { NavLink } from 'react-router-dom';
 
@@ -10,48 +13,38 @@ import Loading from '~/components/Loading';
 import PetsList from '~/components/PetsList';
 import Pagination from '~/components/Pagination';
 
-import { api } from '~/services/api';
+import { getPetsRequest } from '~/store/modules/pets/actions';
 
 export default function Dashboard() {
-  const [loading, setLoading] = useState(false);
-  const [pagination, setPagination] = useState({});
-  const [filters, setFilters] = useState([]);
-  const [pets, setPets] = useState([]);
+  const dispatch = useDispatch();
+  const pagination = useSelector(state => state.pets.pagination);
+  const loading = useSelector(state => state.pets.loading);
+  const pets = useSelector(state => state.pets.data);
+
+  const [filters, setFilters] = useState('');
 
   useEffect(() => {
     async function loadPets() {
       try {
-        setLoading(true);
+        const filtersQsParse = qs.parse(filters, { delimiter: /[,]/ });
 
-        const { data } = await api.get(`pets${filters}`, {
-          params: {
+        dispatch(
+          getPetsRequest({
             page: 1,
-          },
-        });
-
-        let petsData = [];
-
-        if (data.data.length) {
-          petsData = data.data.map(pet => ({
-            ...pet,
-            filters: [pet.situation, pet.type],
-          }));
-        }
-
-        setPets(petsData);
-        setPagination(data?.pagination);
-        setLoading(false);
+            type: filtersQsParse.type,
+            situation: filtersQsParse.situation,
+          })
+        );
       } catch (err) {
         const { response } = err;
 
         toast.error(
           response?.data?.error?.message || 'Ocorreu um erro interno'
         );
-        setLoading(false);
       }
     }
     loadPets();
-  }, [filters]);
+  }, [dispatch, filters]);
 
   return (
     <Container>
