@@ -17,11 +17,13 @@ import { getPetsRequest } from '~/store/modules/pets/actions';
 
 export default function MyPets() {
   const dispatch = useDispatch();
+  const pagination = useSelector(state => state.pets.pagination);
   const profile = useSelector(state => state.user.profile);
   const loading = useSelector(state => state.pets.loading);
   const pets = useSelector(state => state.pets.data);
 
   const [filters, setFilters] = useState('');
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     async function loadPets() {
@@ -30,7 +32,7 @@ export default function MyPets() {
 
         dispatch(
           getPetsRequest({
-            page: 1,
+            page,
             user_id: profile.id,
             type: filtersQsParse.type,
             situation: filtersQsParse.situation,
@@ -45,7 +47,7 @@ export default function MyPets() {
       }
     }
     loadPets();
-  }, [dispatch, filters, profile.id]);
+  }, [dispatch, filters, page, profile.id]);
 
   return (
     <Container>
@@ -60,7 +62,11 @@ export default function MyPets() {
           </Header>
           <PetsList pets={pets} />
         </div>
-        <Pagination />
+        <Pagination
+          page={page}
+          setPage={setPage}
+          lastPage={pagination.lastPage}
+        />
       </Content>
     </Container>
   );

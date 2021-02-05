@@ -1,41 +1,26 @@
-import React, { useState } from 'react';
-import PropTypes, { any } from 'prop-types';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 
 import { Container } from './styles';
 
-export default function Pagination({ pagination }) {
-  function getPages() {
-    const pages = [1];
+export default function Pagination({ page, setPage, lastPage }) {
+  const [pages, setPages] = useState([]);
 
-    for (let i = 2; i <= pagination.lastPage; i++) {
-      pages.push(i);
+  useEffect(() => {
+    const pagesArray = [];
+
+    for (let i = 1; i <= lastPage; i++) {
+      pagesArray.push(i);
     }
 
-    return pages;
-  }
-
-  const [page, setPage] = useState(1);
-  const [pages] = useState(getPages());
-
-  function changePage(value) {
-    let newValue = page + value;
-
-    if (newValue <= 0) {
-      newValue = 1;
-    }
-
-    if (newValue > pages[pages.length - 1]) {
-      newValue = page;
-    }
-
-    setPage(newValue);
-  }
+    setPages(pagesArray);
+  }, [lastPage]);
 
   return (
     <Container>
       <div>
-        <MdChevronLeft size={18} onClick={() => changePage(-1)} />
+        <MdChevronLeft size={18} />
         {pages.map((number, key) => (
           <button
             type="button"
@@ -46,7 +31,7 @@ export default function Pagination({ pagination }) {
             {number}
           </button>
         ))}
-        <MdChevronRight size={18} onClick={() => changePage(+1)} />
+        <MdChevronRight size={18} />
       </div>
       <div className="limit">
         <span>Exibição por página</span>
@@ -59,5 +44,7 @@ export default function Pagination({ pagination }) {
 }
 
 Pagination.propTypes = {
-  pagination: PropTypes.objectOf(any).isRequired,
+  page: PropTypes.number.isRequired,
+  lastPage: PropTypes.number.isRequired,
+  setPage: PropTypes.oneOfType([PropTypes.func]).isRequired,
 };

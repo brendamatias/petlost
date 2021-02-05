@@ -16,6 +16,7 @@ export function* getPets({ payload }) {
         user_id,
         type,
         situation,
+        limit: 20,
       },
       paramsSerializer: params => {
         return qs.stringify(params, { arrayFormat: 'repeat' });

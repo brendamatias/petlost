@@ -22,6 +22,7 @@ export default function Dashboard() {
   const pets = useSelector(state => state.pets.data);
 
   const [filters, setFilters] = useState('');
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     async function loadPets() {
@@ -30,7 +31,7 @@ export default function Dashboard() {
 
         dispatch(
           getPetsRequest({
-            page: 1,
+            page,
             type: filtersQsParse.type,
             situation: filtersQsParse.situation,
           })
@@ -44,7 +45,7 @@ export default function Dashboard() {
       }
     }
     loadPets();
-  }, [dispatch, filters]);
+  }, [dispatch, filters, page]);
 
   return (
     <Container>
@@ -59,7 +60,11 @@ export default function Dashboard() {
           </Header>
           <PetsList pets={pets} />
         </div>
-        <Pagination pagination={pagination} />
+        <Pagination
+          page={page}
+          setPage={setPage}
+          lastPage={pagination.lastPage}
+        />
       </Content>
     </Container>
   );
