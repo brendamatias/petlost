@@ -2,13 +2,14 @@ import * as Yup from 'yup';
 
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Form, Input } from '@rocketseat/unform';
+import { Form } from '@rocketseat/unform';
 
 import { updateProfileRequest } from '~/store/modules/user/actions';
 
-import AvatarInput from './AvatarInput';
-
 import { Container } from './styles';
+
+import Input from '~/components/Input';
+import ImageInput from '~/components/ImageInput';
 
 const schema = Yup.object().shape({
   name: Yup.string()
@@ -51,10 +52,10 @@ export default function Profile() {
 
       <Form schema={schema} initialData={profile} onSubmit={handleSubmit}>
         <div>
-          <AvatarInput
+          <ImageInput
             name="avatar"
-            avatar={profile.avatar_url}
-            setAvatar={setAvatar}
+            image={profile.avatar_url}
+            setImage={setAvatar}
           />
 
           <div>
@@ -62,23 +63,18 @@ export default function Profile() {
             <p>{profile.email}</p>
           </div>
         </div>
-
-        <label htmlFor="name">nome completo</label>
-        <Input name="name" />
-
-        <label htmlFor="email">e-mail</label>
-        <Input name="email" />
+        <Input name="name" label="nome completo" />
+        <Input name="email" label="e-mail" />
 
         <hr />
 
-        <label htmlFor="oldPassword">senha anterior</label>
-        <Input name="oldPassword" type="password" />
-
-        <label htmlFor="password">nova senha</label>
-        <Input name="password" type="password" />
-
-        <label htmlFor="confirmPassword">confirmação de senha</label>
-        <Input name="confirmPassword" type="password" />
+        <Input name="oldPassword" label="senha anterior" type="password" />
+        <Input name="password" label="nova senha" type="password" />
+        <Input
+          name="confirmPassword"
+          label="confirmação de senha"
+          type="password"
+        />
 
         <button type="submit">atualizar perfil</button>
       </Form>
