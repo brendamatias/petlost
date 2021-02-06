@@ -3,12 +3,10 @@ import qs from 'qs';
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { NavLink } from 'react-router-dom';
 
 import { Container, Content } from '~/styles/dashboard';
 
 import Header from '~/components/Header';
-import Button from '~/components/Button';
 import Loading from '~/components/Loading';
 import PetsList from '~/components/PetsList';
 import Pagination from '~/components/Pagination';
@@ -53,11 +51,7 @@ export default function Dashboard() {
       <h1>início</h1>
       <Content>
         <div>
-          <Header filters={filters} setFilters={setFilters}>
-            <Button>
-              <NavLink to="/my-pets">adicionar pet</NavLink>
-            </Button>
-          </Header>
+          <Header filters={filters} setFilters={setFilters} />
           <PetsList pets={pets} />
         </div>
         <Pagination

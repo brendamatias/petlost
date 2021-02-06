@@ -9,7 +9,6 @@ export const Wrapper = styled.div`
 `;
 
 export const Content = styled.div`
-  height: 100%;
   padding: 60px 80px;
 
   > div {
