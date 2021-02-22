@@ -57,7 +57,7 @@ export default function MyPets() {
         <div>
           <Header filters={filters} setFilters={setFilters}>
             <Button>
-              <NavLink to="/add-pets">adicionar pet</NavLink>
+              <NavLink to="/my-pets/add-pets">adicionar pet</NavLink>
             </Button>
           </Header>
           <PetsList pets={pets} />

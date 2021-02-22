@@ -26,8 +26,8 @@ export default function Routes() {
       <Route path="/messages" component={Messages} isPrivate />
       <Route path="/profile" component={Profile} isPrivate />
 
-      <Route path="/my-pets" component={MyPets} isPrivate />
-      <Route path="/add-pets" component={AddPets} isPrivate />
+      <Route path="/my-pets" exact component={MyPets} isPrivate />
+      <Route path="/my-pets/add-pets" component={AddPets} isPrivate />
 
       <Route path="/" component={() => <h1>404</h1>} />
     </Switch>

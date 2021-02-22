@@ -45,7 +45,7 @@ export default function PetList({ pets }) {
                 <strong>{pet.name}</strong>
                 <p>
                   <MdLocationOn color="#bb2929" size={18} />
-                  {pet.address.city} - {pet.address.state}
+                  {pet.city} - {pet.state}
                   <strong>(3.6 km)</strong>
                 </p>
               </div>
