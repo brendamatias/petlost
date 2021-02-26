@@ -18,23 +18,22 @@ export default function Messages() {
   const [chats, setChats] = useState([]);
   const [fromId, setFromId] = useState('');
   const [from, setFrom] = useState('');
-  const [keyChat, setKeyChat] = useState('');
   const [loading, setLoading] = useState(true);
 
-  const formatDate = d => format(d, "dd ' de ' MMMM'", { locale: pt });
+  // const formatDate = d => format(d, "dd ' de ' MMMM'", { locale: pt });
 
-  async function changeChat(id, key) {
+  async function changeChat(id) {
     try {
+      console.log('oi');
       const { data } = await api.get(`users/${id}`);
 
-      setFromId(data.id);
-      setFrom(data.name);
-      setKeyChat(key);
+      setFromId(data.data.id);
+      setFrom(data.data.name);
+      console.log(from);
     } catch (err) {
       const { response } = err;
 
       setFrom('');
-      setKeyChat('');
 
       toast.error(
         response?.data?.error?.message || 'Oops, server error. Try again later.'
@@ -49,20 +48,13 @@ export default function Messages() {
       const response = await api.get('messages');
 
       const data = await Promise.all(
-        response.data.map(message => {
-          const userFrom =
-            message.sender === profile.id ? message.recipient : message.sender;
-
-          return api.get(`users/${userFrom}`).then(user => {
-            const fromUser = user.data;
-
-            return {
-              ...message,
-              from: fromUser.name,
-              fromId: fromUser.id,
-              formattedDate: formatDate(parseISO(message.createdAt)),
-            };
-          });
+        response.data.data.map(message => {
+          return {
+            ...message,
+            from: message.name,
+            fromId: message.id,
+            // formattedDate: formatDate(parseISO(message.createdAt)),
+          };
         })
       );
 
@@ -89,11 +81,8 @@ export default function Messages() {
               </Search>
               <Scroll>
                 {chats.map(chat => (
-                  <Preview key={chat._id}>
-                    <img
-                      src="https://api.adorable.io/avatars/60/abott@adorable.png"
-                      alt="Perfil"
-                    />
+                  <Preview key={chat.fromId}>
+                    <img src={chat.avatar_url} alt="Perfil" />
                     <div>
                       <button
                         type="submit"
@@ -102,7 +91,7 @@ export default function Messages() {
                         }}
                       >
                         <strong>{chat.from}</strong>
-                        <p>{chat.content}</p>
+                        <p>oii</p>
                       </button>
                     </div>
                     <div>
@@ -114,7 +103,7 @@ export default function Messages() {
               </Scroll>
             </List>
 
-            {from ? <Chat from={from} fromId={fromId} keyChat={keyChat} /> : ''}
+            {from ? <Chat from={from} fromId={fromId} /> : ''}
           </Content>
         </Container>
       )}

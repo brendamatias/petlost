@@ -41,7 +41,7 @@ export default function Sidebar() {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/messages" className="disabled-link">
+            <NavLink to="/messages">
               <MdForum size={22} />
               mensagens
             </NavLink>

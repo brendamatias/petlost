@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes, { object } from 'prop-types';
 
 import { MdLocationOn } from 'react-icons/md';
-import { TagsFilters, TagFilter } from './styles';
+import { TagsFilters, TagFilter, Scroll } from './styles';
 
 import noImage from '~/assets/no-image.png';
 
@@ -28,13 +28,19 @@ export default function PetList({ pets }) {
   }
 
   return (
-    <>
+    <Scroll>
       {pets.length > 0 ? (
         <ul>
           {pets.map(pet => (
             <li key={pet.id}>
               <img src={pet.files[0]?.url || noImage} alt="" />
               <div>
+                <strong>{pet.name}</strong>
+                <p>
+                  <MdLocationOn color="#bb2929" size={18} />
+                  {pet.city} - {pet.state}
+                  <strong>(3.6 km)</strong>
+                </p>
                 <TagsFilters>
                   {pet.filters.map((filter, index) => (
                     <TagFilter key={index} color={returnColor(filter)}>
@@ -42,12 +48,6 @@ export default function PetList({ pets }) {
                     </TagFilter>
                   ))}
                 </TagsFilters>
-                <strong>{pet.name}</strong>
-                <p>
-                  <MdLocationOn color="#bb2929" size={18} />
-                  {pet.city} - {pet.state}
-                  <strong>(3.6 km)</strong>
-                </p>
               </div>
             </li>
           ))}
@@ -57,7 +57,7 @@ export default function PetList({ pets }) {
           {/* <h2>ops, você não tem pets cadastrados no momento</h2> */}
         </div>
       )}
-    </>
+    </Scroll>
   );
 }
 

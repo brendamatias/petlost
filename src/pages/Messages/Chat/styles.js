@@ -36,7 +36,6 @@ export const Scroll = styled(PerfectScrollbar)`
 export const UserMessages = styled.div`
   display: flex;
   justify-content: ${props => (props.author ? 'flex-end' : 'flex-start')};
-  margin-bottom: 50px;
 
   div:first-child {
     display: flex;
@@ -52,20 +51,21 @@ export const UserMessages = styled.div`
       props.author ? '25px 25px 0px 25px' : '25px 25px 25px 0px'};
     color: ${props => (props.author ? props.theme.colors.tertiary : '#464e59')};
     font-weight: 600;
+    height: calc(100% - 35px);
 
     &::after {
-      content: 'Today at 1:00pm';
+      content: '${props => props.time}';
       display: block;
-      position: absolute;
-      margin-top: 20px;
+      position: relative;
+       margin-top: 20px;
       font-size: 11px;
       padding: 0;
       color: rgba(0, 0, 0, 0.4);
       font-weight: bold;
       margin-left: ${props => (props.author ? '0' : '-18px')};
       margin-right: ${props => (props.author ? '25px' : '0')};
-      left: ${props => (props.author ? '-50' : '50')};
-      text-align: end;
+      left: ${props => (props.author ? '-50' : '50')}; 
+      text-align: end; 
     }
   }
 
