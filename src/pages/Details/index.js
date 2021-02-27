@@ -109,8 +109,31 @@ export default function Details({ history, match }) {
     getPet();
   }, [id.value]);
 
-  function sendMessage(message) {
-    console.log(message);
+  async function sendMessage(content) {
+    try {
+      await api.post('/chats', { message: content, pet_id: id.value });
+
+      toast.success('Mensagem enviada com sucesso!');
+      history.push('/messages');
+    } catch (err) {
+      const { response } = err;
+
+      if (response && response.data) {
+        if (response.data.errors) {
+          for (let i = 0; i < response.data.errors.length; i++) {
+            toast.error(
+              `${response.data.errors[i].field} ${response.data.errors[i].message}`
+            );
+          }
+        }
+      } else {
+        toast.error(
+          response?.data?.error?.message || 'Ocorreu um erro interno'
+        );
+      }
+
+      setLoading(false);
+    }
   }
 
   return (

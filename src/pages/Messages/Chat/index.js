@@ -16,15 +16,15 @@ import {
 
 import SecondaryLoading from '~/components/SecondaryLoading';
 
-export default function Chat({ from, fromId }) {
+export default function Chat({ channel, pet_name, sender }) {
   const profile = useSelector(state => state.user.profile);
 
   const [start, setStart] = useState(0);
   const [newMessage, setNewMessage] = useState('');
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [channels] = useState([`43523fc6-3bfc-4988-9318-9b8c83f45e39_teste_1`]);
 
+  console.log('oi');
   const ps = useRef();
   const pubnub = usePubNub();
   const willMount = useRef(true);
@@ -52,7 +52,7 @@ export default function Chat({ from, fromId }) {
   function getHistory(scroll) {
     pubnub.history(
       {
-        channel: channels,
+        channel: [channel],
         count: 20,
         start,
       },
@@ -101,7 +101,7 @@ export default function Chat({ from, fromId }) {
     if (message) {
       pubnub
         .publish({
-          channel: channels[0],
+          channel: [channel],
           message: {
             sender_id: profile.id,
             type: 'txt',
@@ -120,8 +120,8 @@ export default function Chat({ from, fromId }) {
 
   useEffect(() => {
     pubnub.addListener({ message: handleMessage });
-    pubnub.subscribe({ channels });
-  }, [channels, pubnub]);
+    pubnub.subscribe({ channels: [channel] });
+  }, [channel, pubnub]);
 
   return (
     <Container>
@@ -130,8 +130,8 @@ export default function Chat({ from, fromId }) {
       ) : (
         <>
           <Header>
-            <strong>Pet Bolinha</strong>
-            <span>From: {from}</span>
+            <strong>{pet_name}</strong>
+            <span>de: {sender}</span>
           </Header>
           <ChatContent>
             <Scroll
@@ -171,6 +171,7 @@ export default function Chat({ from, fromId }) {
 }
 
 Chat.propTypes = {
-  from: PropTypes.string.isRequired,
-  fromId: PropTypes.string.isRequired,
+  channel: PropTypes.string.isRequired,
+  pet_name: PropTypes.string.isRequired,
+  sender: PropTypes.string.isRequired,
 };
