@@ -12,7 +12,8 @@ import Messages from '~/pages/Messages';
 import Profile from '~/pages/Profile';
 
 import MyPets from '~/pages/MyPets';
-import AddPets from '~/pages/MyPets/AddPets';
+import AddPets from '~/pages/AddPets';
+import Details from '~/pages/Details';
 
 export default function Routes() {
   return (
@@ -27,7 +28,8 @@ export default function Routes() {
       <Route path="/profile" component={Profile} isPrivate />
 
       <Route path="/my-pets" exact component={MyPets} isPrivate />
-      <Route path="/my-pets/add-pets" component={AddPets} isPrivate />
+      <Route path="/details/:id" exact component={Details} isPrivate />
+      <Route path="/add-pets" component={AddPets} isPrivate />
 
       <Route path="/" component={() => <h1>404</h1>} />
     </Switch>

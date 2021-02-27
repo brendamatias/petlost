@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes, { object } from 'prop-types';
 
+import { NavLink } from 'react-router-dom';
 import { MdLocationOn } from 'react-icons/md';
 import { TagsFilters, TagFilter, Scroll } from './styles';
 
@@ -33,7 +34,9 @@ export default function PetList({ pets }) {
         <ul>
           {pets.map(pet => (
             <li key={pet.id}>
-              <img src={pet.files[0]?.url || noImage} alt="" />
+              <NavLink to={`details/${pet.id}`}>
+                <img src={pet.files[0]?.url || noImage} alt="" />
+              </NavLink>
               <div>
                 <strong>{pet.name}</strong>
                 <p>

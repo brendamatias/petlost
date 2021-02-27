@@ -17,6 +17,7 @@
     "pubnub-react": "^2.1.0",
     "qs": "^6.9.6",
     "react": "^16.13.1",
+    "react-awesome-slider": "^4.1.0",
     "react-dom": "^16.13.1",
     "react-icons": "^3.9.0",
     "react-perfect-scrollbar": "^1.5.8",

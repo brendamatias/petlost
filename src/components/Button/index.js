@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 import { ButtonContent } from './styles';
 
-export default function Button({ children, onChange }) {
+export default function Button({ children, onClick }) {
   return (
-    <ButtonContent type="button" onChange={onChange}>
+    <ButtonContent type="button" onClick={onClick}>
       {children}
     </ButtonContent>
   );
@@ -13,5 +13,5 @@ export default function Button({ children, onChange }) {
 
 Button.propTypes = {
   children: PropTypes.element.isRequired,
-  onChange: PropTypes.oneOfType([PropTypes.func]).isRequired,
+  onClick: PropTypes.oneOfType([PropTypes.func]).isRequired,
 };

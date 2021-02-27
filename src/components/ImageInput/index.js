@@ -2,7 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useField } from '@rocketseat/unform';
 
-import { Label } from './styles';
+import { MdClose } from 'react-icons/md';
+import { Content } from './styles';
 import noImage from '~/assets/no-image.png';
 
 export default function ImageInput({ name, image, setImage }) {
@@ -23,22 +24,34 @@ export default function ImageInput({ name, image, setImage }) {
   }, [name, ref, registerField]);
 
   async function handleChange(e) {
-    setImage(e.target.files[0]);
-    setPreview(URL.createObjectURL(e.target.files[0]));
+    const currentImage = e?.target.files[0] || null;
+    const imageUrl = currentImage ? URL.createObjectURL(currentImage) : null;
+
+    setImage(currentImage);
+    setPreview(imageUrl);
   }
 
   return (
-    <Label htmlFor={name}>
-      <img src={preview || noImage} alt="" />
+    <Content>
+      <label htmlFor={name}>
+        <img src={preview || noImage} alt="" />
 
-      <input
-        type="file"
-        id={name}
-        accept="image/*"
-        onChange={handleChange}
-        ref={ref}
-      />
-    </Label>
+        <input
+          type="file"
+          id={name}
+          accept="image/*"
+          onChange={handleChange}
+          ref={ref}
+        />
+      </label>
+      {preview && (
+        <div>
+          <button type="button" onClick={() => handleChange(null)}>
+            <MdClose size={14} />
+          </button>
+        </div>
+      )}
+    </Content>
   );
 }
 
