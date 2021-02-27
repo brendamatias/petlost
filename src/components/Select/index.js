@@ -1,14 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Select as SelectUnform } from '@rocketseat/unform';
 import { Label } from './styles';
 
 export default function Select({ name, label, options, ...rest }) {
   return (
     <Label htmlFor={name}>
       <span>{label}</span>
-      <SelectUnform name={name} options={options} {...rest} />
+      <select name={name} {...rest}>
+        {options.map(option => (
+          <option key={option.id} value={option.id}>
+            {option.title}
+          </option>
+        ))}
+      </select>
     </Label>
   );
 }

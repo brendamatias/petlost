@@ -20,6 +20,11 @@ export const Container = styled.div`
       color: ${props => props.theme.colors.textPrimary};
       cursor: pointer;
     }
+
+    .back-page {
+      background: none;
+      border: none;
+    }
   }
 
   .content {

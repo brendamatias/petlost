@@ -9,6 +9,7 @@ import { updateProfileRequest } from '~/store/modules/user/actions';
 import { Container } from './styles';
 
 import Input from '~/components/Input';
+import Button from '~/components/Button';
 import ImageInput from '~/components/ImageInput';
 
 const schema = Yup.object().shape({
@@ -76,7 +77,9 @@ export default function Profile() {
           type="password"
         />
 
-        <button type="submit">atualizar perfil</button>
+        <Button type="submit" background="#bb2929">
+          atualizar perfil
+        </Button>
       </Form>
     </Container>
   );

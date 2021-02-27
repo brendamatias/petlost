@@ -16,12 +16,12 @@ export default function RadioButton({
       <span>{title}</span>
       <div>
         {options.map(option => (
-          <Label htmlFor={name}>
+          <Label htmlFor={name} key={option.name}>
             <InputUnform
               id={option.name}
               name={name}
               value={option.name}
-              // checked={checked === option.name}
+              checked={checked === option.name}
               type="radio"
               {...rest}
             />

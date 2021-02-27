@@ -12,6 +12,7 @@ import { format, parseISO } from 'date-fns';
 import AwesomeSlider from 'react-awesome-slider';
 import 'react-awesome-slider/dist/styles.css';
 
+import Modal from '~/components/Modal';
 import Input from '~/components/Input';
 import Select from '~/components/Select';
 import Button from '~/components/Button';
@@ -26,13 +27,15 @@ import { api } from '~/services/api';
 
 const formatDate = d => format(d, 'yyyy-MM-dd');
 
-export default function Details({ match }) {
+export default function Details({ history, match }) {
   const profile = useSelector(state => state.user.profile);
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [modalVisible, setModalVisible] = useState(false);
   const [edit, setEdit] = useState(false);
   const [breeds, setBreeds] = useState([]);
 
+  const [message, setMessage] = useState('');
   const [firstImage, setFirstImage] = useState(null);
   const [secondImage, setSecondImage] = useState(null);
   const [thirdImage, setThirdImage] = useState(null);
@@ -106,163 +109,201 @@ export default function Details({ match }) {
     getPet();
   }, [id.value]);
 
+  function sendMessage(message) {
+    console.log(message);
+  }
+
   return (
     <>
       {!loading ? (
-        <Container>
-          <div className="header">
-            <div>
-              <NavLink to="/my-pets">
-                <MdArrowBack size={22} />
-              </NavLink>
+        <>
+          <Modal
+            title="escreva uma mensagem"
+            visible={modalVisible}
+            setVisible={setModalVisible}
+          >
+            <>
+              <Textarea
+                name="message"
+                label="mensagem"
+                type="textarea"
+                onChange={e => setMessage(e.target.value)}
+                value={message}
+              />
+              <Button onClick={() => sendMessage(message)}>enviar</Button>
+            </>
+          </Modal>
+          <Container>
+            <div className="header">
               <div>
-                <h1>detalhes do pet</h1>
+                <button
+                  className="back-page"
+                  type="button"
+                  to="/my-pets"
+                  onClick={() => {
+                    history.goBack();
+                  }}
+                >
+                  <MdArrowBack size={22} />
+                </button>
+                <div>
+                  <h1>detalhes do pet</h1>
+                </div>
               </div>
+
+              {profile.id === userId ? (
+                <Button
+                  className={edit ? 'edit' : ''}
+                  onClick={() => setEdit(!edit)}
+                  background={!edit ? '#2A54DE' : ''}
+                >
+                  {edit ? 'cancelar' : 'editar pet'}
+                </Button>
+              ) : (
+                <Button
+                  background="#2A54DE"
+                  onClick={() => setModalVisible(true)}
+                >
+                  enviar mensagem
+                </Button>
+              )}
             </div>
 
-            {profile.id === userId && (
-              <Button
-                className={edit ? 'edit' : ''}
-                onClick={() => setEdit(!edit)}
-              >
-                {edit ? 'cancelar' : 'editar pet'}
-              </Button>
-            )}
-          </div>
-
-          <div className="content">
-            {edit ? (
-              <Images>
-                <ImageInput
-                  name="petImageFirst"
-                  image={firstImage}
-                  setImage={setFirstImage}
-                />
-                <ImageInput
-                  name="petImageSecond"
-                  image={secondImage}
-                  setImage={setSecondImage}
-                />
-                <ImageInput
-                  name="petImageThird"
-                  image={thirdImage}
-                  setImage={setThirdImage}
-                />
-              </Images>
-            ) : (
-              <AwesomeSlider>
-                {files?.map(file => (
-                  <div data-src={file.url} />
-                ))}
-              </AwesomeSlider>
-            )}
-
-            <Form>
-              <Input
-                name="name"
-                label="nome do pet"
-                value={name}
-                onChange={e => setName(e.target.value)}
-                disabled={!edit}
-              />
-              <div className="grid">
-                <Select
-                  name="type"
-                  label="tipo"
-                  options={[
-                    { id: 'dog', title: 'cachorro' },
-                    { id: 'cat', title: 'gato' },
-                  ]}
-                  value={type}
-                  onChange={e => {
-                    setType(e.target.value);
-                  }}
-                  disabled={!edit}
-                />
-
-                <Select
-                  name="breed"
-                  label="raça"
-                  options={breeds}
-                  value={breed}
-                  disabled={!edit}
-                />
-              </div>
-              <Select
-                name="situation"
-                label="situação"
-                options={[
-                  { id: 'mating', title: 'acasalamento' },
-                  { id: 'adoption', title: 'adoção' },
-                  { id: 'disappeared', title: 'desaparecido' },
-                ]}
-                value={situation}
-                onChange={e => setSituation(e.target.value)}
-                disabled={!edit}
-              />
-              <Select
-                name="state"
-                label="estados"
-                options={[
-                  { id: 'PE', title: 'Pernambuco' },
-                  { id: 'PB', title: 'Paraiba' },
-                ]}
-                onChange={e => setState(e.target.value)}
-                value={state}
-                disabled={!edit}
-              />
-              <Select
-                name="city"
-                label="cidade"
-                options={[
-                  { id: 'recife', title: 'Recife' },
-                  { id: 'joao_pessoa', title: 'João pessoa' },
-                ]}
-                value={city}
-                onChange={e => setCity(e.target.value)}
-                disabled={!edit}
-              />
-              <div className="grid">
-                <Input
-                  name="birth_date"
-                  label="data de nascimento"
-                  type="date"
-                  value={birthDate}
-                  onChange={e => setBirthDate(e.target.value)}
-                  disabled={!edit}
-                />
-                <RadioButton
-                  name="gender"
-                  title="gênero"
-                  type="radio"
-                  options={[
-                    { name: 'female', label: 'Fêmea' },
-                    { name: 'male', label: 'Macho' },
-                  ]}
-                  checked={gender}
-                  disabled={!edit}
-                />
-              </div>
-              <Textarea
-                name="description"
-                label="descrição"
-                type="textarea"
-                onChange={e => setDescription(e.target.value)}
-                value={description}
-                disabled={!edit}
-              />
-
-              {edit && (
-                <>
-                  <hr />
-                  <button type="submit">
-                    {loading ? 'carregando...' : 'editar pet'}
-                  </button>
-                </>
+            <div className="content">
+              {edit ? (
+                <Images>
+                  <ImageInput
+                    name="petImageFirst"
+                    image={firstImage}
+                    setImage={setFirstImage}
+                  />
+                  <ImageInput
+                    name="petImageSecond"
+                    image={secondImage}
+                    setImage={setSecondImage}
+                  />
+                  <ImageInput
+                    name="petImageThird"
+                    image={thirdImage}
+                    setImage={setThirdImage}
+                  />
+                </Images>
+              ) : (
+                <AwesomeSlider>
+                  {files?.map((file, index) => (
+                    <div data-src={file.url} key={index} />
+                  ))}
+                </AwesomeSlider>
               )}
-            </Form>
-          </div>
-        </Container>
+
+              <Form>
+                <Input
+                  name="name"
+                  label="nome do pet"
+                  value={name}
+                  onChange={e => setName(e.target.value)}
+                  disabled={!edit}
+                />
+                <div className="grid">
+                  <Select
+                    name="type"
+                    label="tipo"
+                    options={[
+                      { id: 'dog', title: 'cachorro' },
+                      { id: 'cat', title: 'gato' },
+                    ]}
+                    value={type}
+                    onChange={e => {
+                      setType(e.target.value);
+                    }}
+                    disabled={!edit}
+                  />
+
+                  <Select
+                    name="breed"
+                    label="raça"
+                    options={breeds}
+                    value={breed}
+                    disabled={!edit}
+                  />
+                </div>
+                <Select
+                  name="situation"
+                  label="situação"
+                  options={[
+                    { id: 'mating', title: 'acasalamento' },
+                    { id: 'adoption', title: 'adoção' },
+                    { id: 'disappeared', title: 'desaparecido' },
+                  ]}
+                  value={situation}
+                  onChange={e => setSituation(e.target.value)}
+                  disabled={!edit}
+                />
+                <Select
+                  name="state"
+                  label="estados"
+                  options={[
+                    { id: 'PE', title: 'Pernambuco' },
+                    { id: 'PB', title: 'Paraiba' },
+                  ]}
+                  onChange={e => setState(e.target.value)}
+                  value={state}
+                  disabled={!edit}
+                />
+                <Select
+                  name="city"
+                  label="cidade"
+                  options={[
+                    { id: 'recife', title: 'Recife' },
+                    { id: 'joao_pessoa', title: 'João pessoa' },
+                  ]}
+                  value={city}
+                  onChange={e => setCity(e.target.value)}
+                  disabled={!edit}
+                />
+                <div className="grid">
+                  <Input
+                    name="birth_date"
+                    label="data de nascimento"
+                    type="date"
+                    value={birthDate}
+                    onChange={e => setBirthDate(e.target.value)}
+                    disabled={!edit}
+                  />
+                  <RadioButton
+                    name="gender"
+                    title="gênero"
+                    type="radio"
+                    options={[
+                      { name: 'female', label: 'Fêmea' },
+                      { name: 'male', label: 'Macho' },
+                    ]}
+                    checked={gender}
+                    onChange={e => setGender(e.target.value)}
+                    disabled={!edit}
+                  />
+                </div>
+                <Textarea
+                  name="description"
+                  label="descrição"
+                  type="textarea"
+                  onChange={e => setDescription(e.target.value)}
+                  value={description}
+                  disabled={!edit}
+                />
+
+                {edit && (
+                  <>
+                    <hr />
+                    <button type="submit">
+                      {loading ? 'carregando...' : 'editar pet'}
+                    </button>
+                  </>
+                )}
+              </Form>
+            </div>
+          </Container>
+        </>
       ) : (
         <Loading>Carregando...</Loading>
       )}
