@@ -40,6 +40,8 @@ export default createGlobalStyle`
   }
 
   img {
-    -webkit-user-draggit: none
+    -webkit-user-draggit: none;
+    object-fit: cover;
+    object-position: center;
   }
 `;

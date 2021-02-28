@@ -15,19 +15,19 @@ import {
 } from './styles';
 
 import SecondaryLoading from '~/components/SecondaryLoading';
+import noImage from '~/assets/no-image.png';
 
-export default function Chat({ channel, pet_name, sender }) {
+export default function Chat({ channel, pet_name, pet_avatar_url, user_name }) {
   const profile = useSelector(state => state.user.profile);
 
-  const [start, setStart] = useState(0);
   const [newMessage, setNewMessage] = useState('');
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [start, setStart] = useState(0);
 
-  console.log('oi');
   const ps = useRef();
+
   const pubnub = usePubNub();
-  const willMount = useRef(true);
 
   function formatTime(timetoken) {
     const rawTime = new Date(parseInt(timetoken, 10) / 1e4);
@@ -49,22 +49,33 @@ export default function Chat({ channel, pet_name, sender }) {
     }
   }
 
-  function getHistory(scroll) {
+  function getHistory(currentChannel, currentStart = 0, scroll) {
+    if (!currentChannel) return;
+
     pubnub.history(
       {
-        channel: [channel],
+        channel: [currentChannel],
         count: 20,
-        start,
+        start: currentStart,
       },
       (status, response) => {
         if (response && response.messages.length) {
-          const messagesFormatted = messages;
+          let messagesFormatted = [];
 
           response.messages.forEach(message => {
-            messagesFormatted.unshift({
-              ...message.entry,
-              timetoken: message.timetoken,
-            });
+            if (scroll) {
+              messagesFormatted = messages;
+
+              messagesFormatted.unshift({
+                ...message.entry,
+                timetoken: message.timetoken,
+              });
+            } else {
+              messagesFormatted.push({
+                ...message.entry,
+                timetoken: message.timetoken,
+              });
+            }
           });
 
           setMessages(messagesFormatted);
@@ -72,16 +83,14 @@ export default function Chat({ channel, pet_name, sender }) {
 
           if (!scroll) {
             scrollToBottom();
+          } else if (ps.current) {
+            ps.current.scrollTop = 200;
           }
+        } else {
+          setMessages([]);
         }
       }
     );
-  }
-
-  if (willMount.current) {
-    getHistory();
-
-    willMount.current = false;
   }
 
   function handleMessage(event) {
@@ -113,14 +122,21 @@ export default function Chat({ channel, pet_name, sender }) {
   }
 
   function handleScroll(scrollTop) {
-    if (scrollTop === 0) {
-      getHistory(true);
+    if (scrollTop === 0 && messages.length === 20) {
+      getHistory(channel, start, true);
     }
   }
 
   useEffect(() => {
     pubnub.addListener({ message: handleMessage });
+  }, [pubnub]);
+
+  useEffect(() => {
+    pubnub.unsubscribeAll();
     pubnub.subscribe({ channels: [channel] });
+
+    getHistory(channel, 0, false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [channel, pubnub]);
 
   return (
@@ -131,7 +147,7 @@ export default function Chat({ channel, pet_name, sender }) {
         <>
           <Header>
             <strong>{pet_name}</strong>
-            <span>de: {sender}</span>
+            <span>de: {user_name}</span>
           </Header>
           <ChatContent>
             <Scroll
@@ -145,8 +161,11 @@ export default function Chat({ channel, pet_name, sender }) {
                   time={formatTime(message.timetoken)}
                 >
                   <div>
-                    <img src={message.avatar_url} alt="Perfil" />
-                    <p>{message?.body?.content}</p>
+                    <img src={pet_avatar_url || noImage} alt="Perfil" />
+                    <div className="message-content">
+                      <p>{message?.body?.content}</p>
+                      <span>{formatTime(message.timetoken)}</span>
+                    </div>
                   </div>
                 </UserMessages>
               ))}
@@ -156,11 +175,11 @@ export default function Chat({ channel, pet_name, sender }) {
                 <Input
                   name="message"
                   type="text"
-                  placeholder="Type a message..."
+                  placeholder="digite uma mensagem..."
                   value={newMessage}
                   onChange={event => setNewMessage(event.target.value)}
                 />
-                <button type="submit">Enviar</button>
+                <button type="submit">enviar</button>
               </Form>
             </NewMessage>
           </ChatContent>
@@ -173,5 +192,10 @@ export default function Chat({ channel, pet_name, sender }) {
 Chat.propTypes = {
   channel: PropTypes.string.isRequired,
   pet_name: PropTypes.string.isRequired,
-  sender: PropTypes.string.isRequired,
+  pet_avatar_url: PropTypes.string,
+  user_name: PropTypes.string.isRequired,
+};
+
+Chat.defaultProps = {
+  pet_avatar_url: '',
 };

@@ -36,14 +36,30 @@ export const Scroll = styled(PerfectScrollbar)`
 export const UserMessages = styled.div`
   display: flex;
   justify-content: ${props => (props.author ? 'flex-end' : 'flex-start')};
+  margin-bottom: 16px;
 
   div:first-child {
     display: flex;
     align-items: flex-end;
   }
 
+  .message-content {
+    display: flex;
+    flex-direction: column;
+    margin-left: ${props => (props.author ? '0px' : '18px')};
+
+    span {
+      display: block;
+      font-size: 11px;
+      padding: 0;
+      color: rgba(0, 0, 0, 0.4);
+      font-weight: bold;
+      margin-top: 6px;
+      text-align: ${props => (props.author ? 'end' : 'start')};
+    }
+  }
+
   p {
-    margin-left: 18px;
     background: ${props =>
       props.author ? props.theme.colors.primary : '#e9e8ed'};
     padding: 15px 20px;
@@ -52,21 +68,6 @@ export const UserMessages = styled.div`
     color: ${props => (props.author ? props.theme.colors.tertiary : '#464e59')};
     font-weight: 600;
     height: calc(100% - 35px);
-
-    &::after {
-      content: '${props => props.time}';
-      display: block;
-      position: relative;
-       margin-top: 20px;
-      font-size: 11px;
-      padding: 0;
-      color: rgba(0, 0, 0, 0.4);
-      font-weight: bold;
-      margin-left: ${props => (props.author ? '0' : '-18px')};
-      margin-right: ${props => (props.author ? '25px' : '0')};
-      left: ${props => (props.author ? '-50' : '50')}; 
-      text-align: end; 
-    }
   }
 
   span {
@@ -82,6 +83,8 @@ export const UserMessages = styled.div`
 `;
 
 export const NewMessage = styled.div`
+  margin-top: -16px;
+
   form {
     display: flex;
     justify-content: space-between;

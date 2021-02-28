@@ -6,7 +6,7 @@ import { Content, Search } from './styles';
 
 import Filter from '~/components/Filter';
 
-export default function Header({ filters, setFilters, children }) {
+export default function Header({ filters, setFilters }) {
   const filtersObject = [
     {
       name: 'tipo',
@@ -46,8 +46,6 @@ export default function Header({ filters, setFilters, children }) {
           <input placeholder="pesquisar" />
         </Search>
       </div>
-
-      <div>{children}</div>
     </Content>
   );
 }
@@ -55,5 +53,4 @@ export default function Header({ filters, setFilters, children }) {
 Header.propTypes = {
   filters: PropTypes.string.isRequired,
   setFilters: PropTypes.oneOfType([PropTypes.func]).isRequired,
-  children: PropTypes.element.isRequired,
 };

@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 import { ButtonContent } from './styles';
 
-export default function Button({ children, onClick, background }) {
+export default function Button({ children, type, onClick, background }) {
   return (
-    <ButtonContent type="button" onClick={onClick} background={background}>
+    <ButtonContent type={type} onClick={onClick} background={background}>
       {children}
     </ButtonContent>
   );
@@ -14,10 +14,13 @@ export default function Button({ children, onClick, background }) {
 Button.propTypes = {
   children: PropTypes.oneOfType([PropTypes.string, PropTypes.element])
     .isRequired,
-  onClick: PropTypes.oneOfType([PropTypes.func]).isRequired,
+  type: PropTypes.string,
+  onClick: PropTypes.oneOfType([PropTypes.func]),
   background: PropTypes.string,
 };
 
 Button.defaultProps = {
+  type: 'button',
+  onClick: null,
   background: '',
 };
