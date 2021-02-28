@@ -3,7 +3,7 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import { lighten } from 'polished';
 
 export const Scroll = styled(PerfectScrollbar)`
-  max-height: calc(100vh - 120px - 47px - 60px - 42px - 40px - 24px - 40px);
+  height: calc(100vh - 120px - 47px - 60px - 42px - 40px - 24px - 40px);
   padding: 0 25px 0 0;
   background: ${props => props.theme.colors.background};
 

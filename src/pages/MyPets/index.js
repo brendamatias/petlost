@@ -24,6 +24,7 @@ export default function MyPets() {
 
   const [filters, setFilters] = useState('');
   const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(20);
 
   useEffect(() => {
     async function loadPets() {
@@ -33,6 +34,7 @@ export default function MyPets() {
         dispatch(
           getPetsRequest({
             page,
+            limit,
             user_id: profile.id,
             type: filtersQsParse.type,
             situation: filtersQsParse.situation,
@@ -47,7 +49,7 @@ export default function MyPets() {
       }
     }
     loadPets();
-  }, [dispatch, filters, page, profile.id]);
+  }, [dispatch, filters, limit, page, profile.id]);
 
   return (
     <Container>
@@ -66,6 +68,8 @@ export default function MyPets() {
           page={page}
           setPage={setPage}
           lastPage={pagination.lastPage}
+          limit={limit}
+          setLimit={setLimit}
         />
       </Content>
     </Container>

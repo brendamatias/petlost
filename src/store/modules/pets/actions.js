@@ -1,7 +1,7 @@
-export function getPetsRequest({ page, user_id, type, situation }) {
+export function getPetsRequest({ page, limit, user_id, type, situation }) {
   return {
     type: '@pets/GET_PETS_REQUEST',
-    payload: { page, user_id, type, situation },
+    payload: { page, limit, user_id, type, situation },
   };
 }
 

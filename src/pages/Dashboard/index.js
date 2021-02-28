@@ -21,6 +21,7 @@ export default function Dashboard() {
 
   const [filters, setFilters] = useState('');
   const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(20);
 
   useEffect(() => {
     async function loadPets() {
@@ -30,6 +31,7 @@ export default function Dashboard() {
         dispatch(
           getPetsRequest({
             page,
+            limit,
             type: filtersQsParse.type,
             situation: filtersQsParse.situation,
           })
@@ -43,7 +45,7 @@ export default function Dashboard() {
       }
     }
     loadPets();
-  }, [dispatch, filters, page]);
+  }, [dispatch, filters, limit, page]);
 
   return (
     <Container>
@@ -58,6 +60,8 @@ export default function Dashboard() {
           page={page}
           setPage={setPage}
           lastPage={pagination.lastPage}
+          limit={limit}
+          setLimit={setLimit}
         />
       </Content>
     </Container>

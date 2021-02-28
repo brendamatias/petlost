@@ -9,14 +9,14 @@ import { getPetsSuccess, getPetsFailure } from './actions';
 
 export function* getPets({ payload }) {
   try {
-    const { page, user_id, type, situation } = payload;
+    const { page, limit, user_id, type, situation } = payload;
     const response = yield call(api.get, 'pets', {
       params: {
         page,
+        limit,
         user_id,
         type,
         situation,
-        limit: 20,
       },
       paramsSerializer: params => {
         return qs.stringify(params, { arrayFormat: 'repeat' });

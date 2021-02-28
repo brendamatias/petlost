@@ -4,13 +4,19 @@ import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 
 import { Container } from './styles';
 
-export default function Pagination({ page, setPage, lastPage }) {
+export default function Pagination({
+  page,
+  setPage,
+  lastPage,
+  limit,
+  setLimit,
+}) {
   const [pages, setPages] = useState([]);
 
   useEffect(() => {
     const pagesArray = [];
 
-    for (let i = 1; i <= lastPage; i++) {
+    for (let i = 1; i <= lastPage; i += 1) {
       pagesArray.push(i);
     }
 
@@ -35,8 +41,17 @@ export default function Pagination({ page, setPage, lastPage }) {
       </div>
       <div className="limit">
         <span>Exibição por página</span>
-        <select>
-          <option>20</option>
+        <select
+          name="limit"
+          value={limit}
+          onChange={e => {
+            setLimit(e.target.value);
+          }}
+        >
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="15">15</option>
+          <option value="20">20</option>
         </select>
       </div>
     </Container>
@@ -45,6 +60,8 @@ export default function Pagination({ page, setPage, lastPage }) {
 
 Pagination.propTypes = {
   page: PropTypes.number.isRequired,
-  lastPage: PropTypes.number.isRequired,
   setPage: PropTypes.oneOfType([PropTypes.func]).isRequired,
+  lastPage: PropTypes.number.isRequired,
+  limit: PropTypes.number.isRequired,
+  setLimit: PropTypes.oneOfType([PropTypes.func]).isRequired,
 };
