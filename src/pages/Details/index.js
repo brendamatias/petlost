@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 
 import { Form } from '@rocketseat/unform';
 import { toast } from 'react-toastify';
-import { NavLink } from 'react-router-dom';
 import { MdArrowBack } from 'react-icons/md';
 import { format, parseISO } from 'date-fns';
 
