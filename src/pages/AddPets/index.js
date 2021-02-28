@@ -6,6 +6,7 @@ import { NavLink } from 'react-router-dom';
 import { MdArrowBack } from 'react-icons/md';
 
 import Input from '~/components/Input';
+import Button from '~/components/Button';
 import Select from '~/components/Select';
 import Textarea from '~/components/Textarea';
 import ImageInput from '~/components/ImageInput';
@@ -23,6 +24,7 @@ export default function AddPets() {
   const [firstImage, setFirstImage] = useState(null);
   const [secondImage, setSecondImage] = useState(null);
   const [thirdImage, setThirdImage] = useState(null);
+  const [gender, setGender] = useState('');
 
   const [loading, setLoading] = useState(false);
 
@@ -49,6 +51,7 @@ export default function AddPets() {
 
   async function handleSubmit(data) {
     try {
+      console.log(data);
       setLoading(true);
 
       const formData = new FormData();
@@ -86,7 +89,7 @@ export default function AddPets() {
 
       if (response && response.data) {
         if (response.data.errors) {
-          for (let i = 0; i < response.data.errors.length; i++) {
+          for (let i = 0; i < response.data.errors.length; i += 1) {
             toast.error(
               `${response.data.errors[i].field} ${response.data.errors[i].message}`
             );
@@ -121,7 +124,7 @@ export default function AddPets() {
           <ImageInput name="petImageSecond" setImage={setSecondImage} />
           <ImageInput name="petImageThird" setImage={setThirdImage} />
         </Images>
-        <Input name="name" label="nome do pet" value="cadasdsat" required />
+        <Input name="name" label="nome do pet" required />
         <div className="grid">
           <Select
             name="type"
@@ -147,24 +150,20 @@ export default function AddPets() {
             { id: 'adoption', title: 'adoção' },
             { id: 'disappeared', title: 'desaparecido' },
           ]}
-          value="disappeared"
           required
         />
         <Select
           name="state"
           label="estados"
           options={[{ id: 'PB', title: 'Pernambuco' }]}
-          value="PB"
           required
         />
         <Select
           name="city"
           label="cidade"
           options={[{ id: 'recife', title: 'Recife' }]}
-          value="recife"
           required
         />
-        /// ta vindo genero male sem ter apertado
         <div className="grid">
           <Input
             name="birth_date"
@@ -180,6 +179,8 @@ export default function AddPets() {
               { name: 'female', label: 'Fêmea' },
               { name: 'male', label: 'Macho' },
             ]}
+            checked={gender}
+            onChange={e => setGender(e.target.value)}
             required
           />
         </div>
@@ -187,13 +188,12 @@ export default function AddPets() {
           name="description"
           label="descrição"
           type="textarea"
-          value="dsajkldsa"
           required
         />
         <hr />
-        <button type="submit">
+        <Button type="submit" background="#bb2929">
           {loading ? 'carregando...' : 'adicionar pet'}
-        </button>
+        </Button>
       </Form>
     </Container>
   );

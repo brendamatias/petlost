@@ -56,14 +56,14 @@ export default function MyPets() {
       {loading && <Loading />}
       <h1>meus pets</h1>
       <Content>
-        <div>
-          <Header filters={filters} setFilters={setFilters}>
-            <Button>
-              <NavLink to="/add-pets">adicionar pet</NavLink>
-            </Button>
-          </Header>
-          <PetsList pets={pets} />
+        <div className="header">
+          <Header filters={filters} setFilters={setFilters} />
+          <Button>
+            <NavLink to="/add-pets">adicionar pet</NavLink>
+          </Button>
         </div>
+
+        <PetsList pets={pets} />
         <Pagination
           page={page}
           setPage={setPage}

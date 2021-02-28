@@ -29,31 +29,11 @@ export const Container = styled.div`
     flex-direction: column;
     margin-top: 60px;
 
-    img {
-      margin-right: 25px;
-    }
-
     hr {
       border: 0;
       height: 1px;
       background: rgba(0, 0, 0, 0.1);
       margin: 10px 0 20px;
-    }
-
-    button {
-      margin: 5px 0 0;
-      background: ${props => props.theme.colors.primary};
-      height: 44px;
-      font-weight: bold;
-      color: ${props => props.theme.colors.tertiary};
-      border: 0;
-      border-radius: 4px;
-      font-size: 16px;
-      transition: background 0.2s;
-
-      &:hover {
-        background: ${darken(0.03, '#bb2929')};
-      }
     }
   }
 `;

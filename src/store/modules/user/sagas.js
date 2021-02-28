@@ -31,7 +31,7 @@ export function* updateProfile({ payload }) {
 
     if (response && response.data) {
       if (response.data.errors) {
-        for (let i = 0; i < response.data.errors.length; i++) {
+        for (let i = 0; i < response.data.errors.length; i += 1) {
           toast.error(
             `${response.data.errors[i].field} ${response.data.errors[i].message}`
           );

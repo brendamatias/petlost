@@ -13,4 +13,13 @@ export const Content = styled.div`
   flex-direction: column;
   justify-content: space-between;
   height: calc(100% - 60px - 24px - 24px);
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+
+    button {
+      height: 100%;
+    }
+  }
 `;
