@@ -22,7 +22,7 @@ export default function Chat({ channel, pet_name, pet_avatar_url, user_name }) {
 
   const [newMessage, setNewMessage] = useState('');
   const [messages, setMessages] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading] = useState(false);
   const [start, setStart] = useState(0);
 
   const ps = useRef();
