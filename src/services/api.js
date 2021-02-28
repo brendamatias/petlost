@@ -6,6 +6,6 @@ const api = axios.create({
   // baseURL: 'http://localhost:3333',
 });
 
-const socket = openSocket('https://petlost-api-dev.herokuapp.com');
+const socket = openSocket('https://petlost-api-dev.herokuapp.com:8080');
 
 export { api, socket };
