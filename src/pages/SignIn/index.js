@@ -10,9 +10,12 @@ import logo from '~/assets/petlost.svg';
 
 const schema = Yup.object().shape({
   email: Yup.string()
-    .email('Enter a valid email.')
-    .required('Email is required.'),
-  password: Yup.string().required('Password is required.'),
+    .trim()
+    .email('Informe um e-mail válido')
+    .required('E-mail é necessário'),
+  password: Yup.string()
+    .trim()
+    .required('Senha é necessária'),
 });
 
 export default function SignIn() {
@@ -33,7 +36,7 @@ export default function SignIn() {
         <label htmlFor="email">e-mail</label>
         <Input name="email" type="email" placeholder="exemplo@email.com" />
 
-        <label htmlForm="password">senha</label>
+        <label htmlFor="password">senha</label>
         <Input
           name="password"
           type="password"

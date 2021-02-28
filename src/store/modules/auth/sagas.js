@@ -26,7 +26,7 @@ export function* signIn({ payload }) {
     const { response } = err;
 
     toast.error(
-      response.data.error?.message ||
+      response?.data?.error?.message ||
         'A autenticação falhou, verifique os seus dados'
     );
 

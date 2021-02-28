@@ -1,16 +1,15 @@
 import styled from 'styled-components';
+import PerfectScrollbar from 'react-perfect-scrollbar';
 import { lighten } from 'polished';
 
-export const Container = styled.div`
-  .no-pets {
-    text-align: center;
-  }
-`;
+export const Scroll = styled(PerfectScrollbar)`
+  height: calc(100vh - 120px - 47px - 60px - 42px - 40px - 24px - 40px);
+  padding: 0 25px 0 0;
+  background: ${props => props.theme.colors.background};
 
-export const Content = styled.div`
   ul {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     grid-gap: 40px;
 
     li {
@@ -53,13 +52,12 @@ export const Content = styled.div`
       }
 
       > div {
-        padding: 30px;
+        padding: 20px 15px;
 
         > strong {
           display: block;
           font-size: 16px;
           color: rgba(0, 0, 0, 0.9);
-          margin-top: 10px;
         }
 
         p {
@@ -67,7 +65,7 @@ export const Content = styled.div`
           align-items: center;
           font-size: 12px;
           color: #8e919b;
-          margin-top: 5px;
+          margin: 4px 0 12px 0;
 
           strong {
             margin-left: 4px;
@@ -92,6 +90,6 @@ export const TagFilter = styled.span`
   color: ${props => props.color};
   padding: 2px 15px;
   border-radius: 15px;
-  margin: 0 10px 10px 0;
+  margin: 0 10px 0 0;
   font-weight: 600;
 `;

@@ -29,8 +29,20 @@ export function* updateProfile({ payload }) {
   } catch (err) {
     const { response } = err;
 
+    if (response && response.data) {
+      if (response.data.errors) {
+        for (let i = 0; i < response.data.errors.length; i += 1) {
+          toast.error(
+            `${response.data.errors[i].field} ${response.data.errors[i].message}`
+          );
+        }
+      }
+
+      yield put(updateProfileFailure());
+    }
+
     toast.error(
-      response.data.error?.message ||
+      response?.data?.error?.message ||
         'Erro ao atualizar o perfil, verifique seus dados'
     );
 

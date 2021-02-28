@@ -1,12 +1,41 @@
+import * as Yup from 'yup';
+
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Form, Input } from '@rocketseat/unform';
+import { Form } from '@rocketseat/unform';
 
 import { updateProfileRequest } from '~/store/modules/user/actions';
 
-import AvatarInput from './AvatarInput';
-
 import { Container } from './styles';
+
+import Input from '~/components/Input';
+import Button from '~/components/Button';
+import ImageInput from '~/components/ImageInput';
+
+const schema = Yup.object().shape({
+  name: Yup.string()
+    .trim()
+    .required('Nome é necessário para atualização de perfil'),
+  email: Yup.string()
+    .trim()
+    .email('Informe um e-mail válido')
+    .required('E-mail é necessário para atualização de perfil'),
+  oldPassword: Yup.string().trim(),
+  password: Yup.string()
+    .trim()
+    .when('oldPassword', (oldPasswordV, field) =>
+      oldPasswordV ? field.required('A senha é obrigatória') : field
+    ),
+  confirmPassword: Yup.string()
+    .trim()
+    .when('password', (passwordV, field) =>
+      passwordV
+        ? field
+            .required('A confirmação de senha é obrigatória')
+            .oneOf([Yup.ref('password')], 'As senhas devem se corresponder')
+        : field
+    ),
+});
 
 export default function Profile() {
   const dispatch = useDispatch();
@@ -22,12 +51,12 @@ export default function Profile() {
     <Container>
       <h1>perfil</h1>
 
-      <Form initialData={profile} onSubmit={handleSubmit}>
+      <Form schema={schema} initialData={profile} onSubmit={handleSubmit}>
         <div>
-          <AvatarInput
+          <ImageInput
             name="avatar"
-            avatar={profile.avatar_url}
-            setAvatar={setAvatar}
+            image={profile.avatar_url}
+            setImage={setAvatar}
           />
 
           <div>
@@ -35,25 +64,22 @@ export default function Profile() {
             <p>{profile.email}</p>
           </div>
         </div>
-
-        <label htmlFor="name">nome completo</label>
-        <Input name="name" />
-
-        <label htmlFor="email">e-mail</label>
-        <Input name="email" />
+        <Input name="name" label="nome completo" />
+        <Input name="email" label="e-mail" />
 
         <hr />
 
-        <label htmlFor="oldPassword">senha anterior</label>
-        <Input name="oldPassword" type="password" />
+        <Input name="oldPassword" label="senha anterior" type="password" />
+        <Input name="password" label="nova senha" type="password" />
+        <Input
+          name="confirmPassword"
+          label="confirmação de senha"
+          type="password"
+        />
 
-        <label htmlFor="password">nova senha</label>
-        <Input name="password" type="password" />
-
-        <label htmlFor="confirmPassword">confirmação de senha</label>
-        <Input name="confirmPassword" type="password" />
-
-        <button type="submit">atualizar perfil</button>
+        <Button type="submit" background="#bb2929">
+          atualizar perfil
+        </Button>
       </Form>
     </Container>
   );

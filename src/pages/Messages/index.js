@@ -1,76 +1,64 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
-
-import { format, parseISO } from 'date-fns';
-import pt from 'date-fns/locale/pt';
 
 import { MdSearch } from 'react-icons/md';
-import { Container, Content, List, Search, Scroll, Preview } from './styles';
+import { Container, Content, List, Search, Scroll } from './styles';
 
 import Loading from '~/components/Loading';
 import Chat from './Chat';
+import ChatItem from './ChatItem';
 
-import { api } from '~/services/api';
+import { socket } from '~/services/api';
 
 export default function Messages() {
   const profile = useSelector(state => state.user.profile);
+  const [chat, setChat] = useState({});
   const [chats, setChats] = useState([]);
-  const [fromId, setFromId] = useState('');
-  const [from, setFrom] = useState('');
-  const [keyChat, setKeyChat] = useState('');
   const [loading, setLoading] = useState(true);
-
-  const formatDate = d => format(d, "dd ' de ' MMMM'", { locale: pt });
-
-  async function changeChat(id, key) {
-    try {
-      const { data } = await api.get(`users/${id}`);
-
-      setFromId(data.id);
-      setFrom(data.name);
-      setKeyChat(key);
-    } catch (err) {
-      const { response } = err;
-
-      setFrom('');
-      setKeyChat('');
-
-      toast.error(
-        response.data.error?.message || 'Oops, server error. Try again later.'
-      );
-    }
-  }
 
   useEffect(() => {
     async function loadChat() {
       setLoading(true);
 
-      const response = await api.get('messages');
+      console.log(socket.connected);
+      if (!socket.connected) {
+        socket.connect();
+      }
 
-      const data = await Promise.all(
-        response.data.map(message => {
-          const userFrom =
-            message.sender === profile.id ? message.recipient : message.sender;
+      socket.emit('clientInfo', { id: profile.id });
 
-          return api.get(`users/${userFrom}`).then(user => {
-            const fromUser = user.data;
+      socket.on(`getChats:${profile.id}`, data => {
+        setLoading(true);
 
-            return {
-              ...message,
-              from: fromUser.name,
-              fromId: fromUser.id,
-              formattedDate: formatDate(parseISO(message.createdAt)),
-            };
-          });
-        })
-      );
+        let currentUser = null;
+        const chatsFormatted = data.map(currentChat => {
+          currentUser =
+            currentChat.sender.id === profile.id
+              ? currentChat.pet.user
+              : currentChat.sender;
 
-      setChats(data);
+          return {
+            id: currentChat.id,
+            pet_name: currentChat.pet.name,
+            pet_avatar_url: currentChat.pet.files[0]?.url,
+            user_name: currentUser.name,
+            channel: `channel.${currentChat.pet_id}.${currentChat.sender_id}`,
+          };
+        });
+
+        setChats(chatsFormatted);
+        setChat(chatsFormatted[0]);
+        setLoading(false);
+      });
+
       setLoading(false);
     }
 
     loadChat();
+
+    return function cleanup() {
+      socket.disconnect();
+    };
   }, [profile.id]);
 
   return (
@@ -79,42 +67,35 @@ export default function Messages() {
         <Loading />
       ) : (
         <Container>
-          <h1>Messages</h1>
+          <h1>mensagens</h1>
 
           <Content>
             <List>
               <Search>
-                <input type="text" placeholder="Search" />
+                <input type="text" placeholder="procurar" />
                 <MdSearch color="#9D9CA1" size={26} />
               </Search>
               <Scroll>
-                {chats.map(chat => (
-                  <Preview key={chat._id}>
-                    <img
-                      src="https://api.adorable.io/avatars/60/abott@adorable.png"
-                      alt="Perfil"
-                    />
-                    <div>
-                      <button
-                        type="submit"
-                        onClick={() => {
-                          changeChat(chat.fromId, chat.key);
-                        }}
-                      >
-                        <strong>{chat.from}</strong>
-                        <p>{chat.content}</p>
-                      </button>
-                    </div>
-                    <div>
-                      <div className="notification" />
-                      <span>{chat.formattedDate}</span>
-                    </div>
-                  </Preview>
+                {chats.map((currentChat, index) => (
+                  <ChatItem
+                    key={index}
+                    currentChat={currentChat}
+                    changeChat={() => setChat(currentChat)}
+                  />
                 ))}
               </Scroll>
             </List>
 
-            {from ? <Chat from={from} fromId={fromId} keyChat={keyChat} /> : ''}
+            {chat.channel ? (
+              <Chat
+                channel={chat.channel}
+                user_name={chat.user_name}
+                pet_name={chat.pet_name}
+                pet_avatar_url={chat.pet_avatar_url}
+              />
+            ) : (
+              ''
+            )}
           </Content>
         </Container>
       )}

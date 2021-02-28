@@ -11,6 +11,10 @@ import Dashboard from '~/pages/Dashboard';
 import Messages from '~/pages/Messages';
 import Profile from '~/pages/Profile';
 
+import MyPets from '~/pages/MyPets';
+import AddPets from '~/pages/AddPets';
+import Details from '~/pages/Details';
+
 export default function Routes() {
   return (
     <Switch>
@@ -22,6 +26,10 @@ export default function Routes() {
       <Route path="/dashboard" component={Dashboard} isPrivate />
       <Route path="/messages" component={Messages} isPrivate />
       <Route path="/profile" component={Profile} isPrivate />
+
+      <Route path="/my-pets" exact component={MyPets} isPrivate />
+      <Route path="/details/:id" exact component={Details} isPrivate />
+      <Route path="/add-pets" component={AddPets} isPrivate />
 
       <Route path="/" component={() => <h1>404</h1>} />
     </Switch>

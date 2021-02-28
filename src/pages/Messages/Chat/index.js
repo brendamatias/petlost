@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { usePubNub } from 'pubnub-react';
+
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { Form, Input } from '@rocketseat/unform';
@@ -13,52 +15,129 @@ import {
 } from './styles';
 
 import SecondaryLoading from '~/components/SecondaryLoading';
+import noImage from '~/assets/no-image.png';
 
-import { api } from '~/services/api';
-
-export default function Chat({ from, fromId, keyChat }) {
+export default function Chat({ channel, pet_name, pet_avatar_url, user_name }) {
   const profile = useSelector(state => state.user.profile);
 
   const [newMessage, setNewMessage] = useState('');
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [start, setStart] = useState(0);
+
+  const ps = useRef();
+
+  const pubnub = usePubNub();
+
+  function formatTime(timetoken) {
+    const rawTime = new Date(parseInt(timetoken, 10) / 1e4);
+
+    const data = rawTime.toLocaleDateString('pt-br');
+    const time = rawTime.toLocaleTimeString('pt-br', {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+
+    return `${data} - ${time}`;
+  }
+
+  function scrollToBottom() {
+    const curr = ps.current;
+
+    if (curr) {
+      curr.scrollTop = curr.scrollHeight;
+    }
+  }
+
+  function getHistory(currentChannel, currentStart = 0, scroll) {
+    if (!currentChannel) return;
+
+    pubnub.history(
+      {
+        channel: [currentChannel],
+        count: 20,
+        start: currentStart,
+      },
+      (status, response) => {
+        if (response && response.messages.length) {
+          let messagesFormatted = [];
+
+          response.messages.forEach(message => {
+            if (scroll) {
+              messagesFormatted = messages;
+
+              messagesFormatted.unshift({
+                ...message.entry,
+                timetoken: message.timetoken,
+              });
+            } else {
+              messagesFormatted.push({
+                ...message.entry,
+                timetoken: message.timetoken,
+              });
+            }
+          });
+
+          setMessages(messagesFormatted);
+          setStart(response.startTimeToken);
+
+          if (!scroll) {
+            scrollToBottom();
+          } else if (ps.current) {
+            ps.current.scrollTop = 200;
+          }
+        } else {
+          setMessages([]);
+        }
+      }
+    );
+  }
+
+  function handleMessage(event) {
+    const { message, timetoken } = event;
+    message.timetoken = timetoken;
+
+    setMessages(data => [...data, message]);
+
+    const curr = ps.current;
+
+    if (curr) {
+      curr.scrollTop = curr.scrollHeight;
+    }
+  }
+
+  function handleSubmit({ message }) {
+    if (message) {
+      pubnub
+        .publish({
+          channel: [channel],
+          message: {
+            sender_id: profile.id,
+            type: 'txt',
+            body: { content: message },
+          },
+        })
+        .then(() => setNewMessage(''));
+    }
+  }
+
+  function handleScroll(scrollTop) {
+    if (scrollTop === 0 && messages.length === 20) {
+      getHistory(channel, start, true);
+    }
+  }
 
   useEffect(() => {
-    async function getMessages() {
-      setLoading(true);
+    pubnub.addListener({ message: handleMessage });
+  }, [pubnub]);
 
-      const { data } = await api.get(`messages/${fromId}`);
+  useEffect(() => {
+    pubnub.unsubscribeAll();
+    pubnub.subscribe({ channels: [channel] });
 
-      setMessages(data);
-
-      setLoading(false);
-    }
-
-    async function loadChat() {
-      // socket.on('received', () => {
-      //   getMessages();
-      // });
-
-      getMessages();
-    }
-
-    loadChat();
-  }, [fromId]);
-
-  function handleSubmit() {
-    const messageObject = {
-      content: newMessage,
-      key: keyChat,
-      sender: profile.id,
-      recipient: fromId,
-    };
-
-    // socket.emit('sendMessage', messageObject);
-
-    setMessages([...messages, messageObject]);
-
-    setNewMessage('');
-  }
+    getHistory(channel, 0, false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [channel, pubnub]);
 
   return (
     <Container>
@@ -67,37 +146,40 @@ export default function Chat({ from, fromId, keyChat }) {
       ) : (
         <>
           <Header>
-            <strong>Pet Bolinha</strong>
-            <span>From: {from}</span>
+            <strong>{pet_name}</strong>
+            <span>de: {user_name}</span>
           </Header>
           <ChatContent>
-            <Scroll>
+            <Scroll
+              containerRef={el => (ps.current = el)}
+              onScrollY={container => handleScroll(container.scrollTop)}
+            >
               {messages.map((message, index) => (
                 <UserMessages
                   key={index}
-                  author={message.sender === profile.id ? 'author' : ''}
+                  author={message.sender_id === profile.id ? 'author' : ''}
+                  time={formatTime(message.timetoken)}
                 >
                   <div>
-                    <img
-                      src="https://api.adorable.io/avatars/60/abott@adorable.png"
-                      alt="Perfil"
-                    />
-                    <p>{message.content}</p>
+                    <img src={pet_avatar_url || noImage} alt="Perfil" />
+                    <div className="message-content">
+                      <p>{message?.body?.content}</p>
+                      <span>{formatTime(message.timetoken)}</span>
+                    </div>
                   </div>
                 </UserMessages>
               ))}
             </Scroll>
-
             <NewMessage>
               <Form onSubmit={handleSubmit}>
                 <Input
                   name="message"
                   type="text"
-                  placeholder="Type a message..."
+                  placeholder="digite uma mensagem..."
                   value={newMessage}
                   onChange={event => setNewMessage(event.target.value)}
                 />
-                <button type="submit">Send</button>
+                <button type="submit">enviar</button>
               </Form>
             </NewMessage>
           </ChatContent>
@@ -108,7 +190,12 @@ export default function Chat({ from, fromId, keyChat }) {
 }
 
 Chat.propTypes = {
-  from: PropTypes.string.isRequired,
-  fromId: PropTypes.number.isRequired,
-  keyChat: PropTypes.string.isRequired,
+  channel: PropTypes.string.isRequired,
+  pet_name: PropTypes.string.isRequired,
+  pet_avatar_url: PropTypes.string,
+  user_name: PropTypes.string.isRequired,
+};
+
+Chat.defaultProps = {
+  pet_avatar_url: '',
 };

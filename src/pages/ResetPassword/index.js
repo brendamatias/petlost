@@ -10,11 +10,12 @@ import history from '~/services/history';
 import { api } from '~/services/api';
 
 const schema = Yup.object().shape({
-  password: Yup.string().required('Senha é obrigatória'),
-  confirmPassword: Yup.string().oneOf(
-    [Yup.ref('password'), null],
-    'As senhas devem se corresponder'
-  ),
+  password: Yup.string()
+    .trim()
+    .required('Senha é obrigatória'),
+  confirmPassword: Yup.string()
+    .trim()
+    .oneOf([Yup.ref('password'), null], 'As senhas devem se corresponder'),
 });
 
 export default function ResetPassword() {
@@ -49,7 +50,7 @@ export default function ResetPassword() {
       <Form schema={schema} onSubmit={handleSubmit}>
         <h3>Redefinir senha</h3>
 
-        <label htmlForm="password">Nova senha</label>
+        <label htmlFor="password">Nova senha</label>
         <Input
           name="password"
           type="password"
@@ -57,7 +58,7 @@ export default function ResetPassword() {
           className="password"
         />
 
-        <label htmlForm="password">Confirmação de senha</label>
+        <label htmlFor="password">Confirmação de senha</label>
         <Input
           name="confirmPassword"
           type="password"

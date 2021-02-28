@@ -1,4 +1,6 @@
 import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
+
 import Switch from 'react-switch';
 import { ThemeContext } from 'styled-components';
 
@@ -25,3 +27,7 @@ export default function SwitchTheme({ toggleTheme }) {
     </Container>
   );
 }
+
+SwitchTheme.propTypes = {
+  toggleTheme: PropTypes.oneOfType([PropTypes.func]).isRequired,
+};

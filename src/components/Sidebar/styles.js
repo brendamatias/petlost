@@ -3,7 +3,6 @@ import styled from 'styled-components';
 export const Container = styled.div`
   background: ${props =>
     `linear-gradient(645deg, ${props.theme.colors.secundary}, ${props.theme.colors.primary})`};
-  /* background: #e41320; */
   padding: 60px 40px;
   display: flex;
   flex-direction: column;
