@@ -38,7 +38,7 @@ export function* updateProfile({ payload }) {
         }
       }
 
-      return false;
+      yield put(updateProfileFailure());
     }
 
     toast.error(

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import { MdSearch } from 'react-icons/md';
@@ -20,11 +20,12 @@ export default function Messages() {
     async function loadChat() {
       setLoading(true);
 
-      socket.connect();
+      console.log(socket.connected);
+      if (!socket.connected) {
+        socket.connect();
+      }
 
-      socket.on('connect', () => {
-        socket.emit('clientInfo', { id: profile.id });
-      });
+      socket.emit('clientInfo', { id: profile.id });
 
       socket.on(`getChats:${profile.id}`, data => {
         setLoading(true);
