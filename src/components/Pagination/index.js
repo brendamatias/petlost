@@ -14,9 +14,9 @@ export default function Pagination({
   const [pages, setPages] = useState([]);
 
   useEffect(() => {
-    const pagesArray = [];
+    const pagesArray = [1];
 
-    for (let i = 1; i <= lastPage; i += 1) {
+    for (let i = 2; i <= lastPage; i += 1) {
       pagesArray.push(i);
     }
 
