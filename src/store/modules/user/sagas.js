@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import { api } from '~/services/api';
 
 import { updateProfileSuccess, updateProfileFailure } from './actions';
+import getError from '~/services/getError';
 
 export function* updateProfile({ payload }) {
   try {
@@ -27,24 +28,7 @@ export function* updateProfile({ payload }) {
 
     yield put(updateProfileSuccess(data.data));
   } catch (err) {
-    const { response } = err;
-
-    if (response && response.data) {
-      if (response.data.errors) {
-        for (let i = 0; i < response.data.errors.length; i += 1) {
-          toast.error(
-            `${response.data.errors[i].field} ${response.data.errors[i].message}`
-          );
-        }
-      }
-
-      yield put(updateProfileFailure());
-    }
-
-    toast.error(
-      response?.data?.error?.message ||
-        'Erro ao atualizar o perfil, verifique seus dados'
-    );
+    getError(err, 'Erro ao atualizar o perfil, verifique seus dados');
 
     yield put(updateProfileFailure());
   }

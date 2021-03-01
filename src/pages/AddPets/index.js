@@ -16,6 +16,7 @@ import { Container, Images } from './styles';
 
 import history from '~/services/history';
 import { api } from '~/services/api';
+import getError from '~/services/getError';
 
 export default function AddPets() {
   const [breeds, setBreeds] = useState([]);
@@ -51,7 +52,6 @@ export default function AddPets() {
 
   async function handleSubmit(data) {
     try {
-      console.log(data);
       setLoading(true);
 
       const formData = new FormData();
@@ -85,21 +85,7 @@ export default function AddPets() {
 
       setLoading(false);
     } catch (err) {
-      const { response } = err;
-
-      if (response && response.data) {
-        if (response.data.errors) {
-          for (let i = 0; i < response.data.errors.length; i += 1) {
-            toast.error(
-              `${response.data.errors[i].field} ${response.data.errors[i].message}`
-            );
-          }
-        }
-      } else {
-        toast.error(
-          response?.data?.error?.message || 'Ocorreu um erro interno'
-        );
-      }
+      getError(err);
 
       setLoading(false);
     }

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import AwesomeSlider from 'react-awesome-slider';
 import { darken } from 'polished';
 
 export const Container = styled.div`
@@ -30,32 +31,6 @@ export const Container = styled.div`
   .content {
     max-width: 600px;
     margin-top: 60px;
-
-    .awssld {
-      > div {
-        border-radius: 8px;
-      }
-
-      --slider-height-percentage: 45%;
-      --slider-transition-duration: 623ms;
-      --organic-arrow-thickness: 5px;
-      --organic-arrow-border-radius: 14px;
-      --organic-arrow-height: 15px;
-      --organic-arrow-color: #bb2929;
-      --control-button-width: 5%;
-      --control-button-height: 25%;
-      --control-button-background: transparent;
-      --control-bullet-color: #723c3c;
-      --control-bullet-active-color: #bb2929;
-      --loader-bar-color: #6d2c2c;
-      --loader-bar-height: 1px;
-
-      nav button {
-        border-radius: 6px;
-        width: 14px;
-        height: 4px;
-      }
-    }
 
     .grid {
       display: grid;
@@ -95,6 +70,32 @@ export const Container = styled.div`
         }
       }
     }
+  }
+`;
+
+export const Slider = styled(AwesomeSlider)`
+  > div {
+    border-radius: 8px;
+  }
+
+  --slider-height-percentage: 45%;
+  --slider-transition-duration: 623ms;
+  --organic-arrow-thickness: 5px;
+  --organic-arrow-border-radius: 14px;
+  --organic-arrow-height: 15px;
+  --organic-arrow-color: #bb2929;
+  --control-button-width: 5%;
+  --control-button-height: 25%;
+  --control-button-background: transparent;
+  --control-bullet-color: #723c3c;
+  --control-bullet-active-color: #bb2929;
+  --loader-bar-color: #6d2c2c;
+  --loader-bar-height: 1px;
+
+  nav button {
+    border-radius: 6px;
+    width: 14px;
+    height: 4px;
   }
 `;
 

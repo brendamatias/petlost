@@ -8,8 +8,9 @@ import { toast } from 'react-toastify';
 import { MdArrowBack } from 'react-icons/md';
 import { format, parseISO } from 'date-fns';
 
-import AwesomeSlider from 'react-awesome-slider';
 import 'react-awesome-slider/dist/styles.css';
+
+import noImage from '~/assets/no-image.png';
 
 import Modal from '~/components/Modal';
 import Input from '~/components/Input';
@@ -20,9 +21,10 @@ import Textarea from '~/components/Textarea';
 import ImageInput from '~/components/ImageInput';
 import RadioButton from '~/components/RadioButton';
 
-import { Container, Images } from './styles';
+import { Container, Slider, Images } from './styles';
 
 import { api } from '~/services/api';
+import getError from '~/services/getError';
 
 const formatDate = d => format(d, 'yyyy-MM-dd');
 
@@ -115,21 +117,7 @@ export default function Details({ history, match }) {
       toast.success('Mensagem enviada com sucesso!');
       history.push('/messages');
     } catch (err) {
-      const { response } = err;
-
-      if (response && response.data) {
-        if (response.data.errors) {
-          for (let i = 0; i < response.data.errors.length; i += 1) {
-            toast.error(
-              `${response.data.errors[i].field} ${response.data.errors[i].message}`
-            );
-          }
-        }
-      } else {
-        toast.error(
-          response?.data?.error?.message || 'Ocorreu um erro interno'
-        );
-      }
+      getError(err);
 
       setLoading(false);
     }
@@ -211,11 +199,15 @@ export default function Details({ history, match }) {
                   />
                 </Images>
               ) : (
-                <AwesomeSlider>
-                  {files?.map((file, index) => (
-                    <div data-src={file.url} key={index} />
-                  ))}
-                </AwesomeSlider>
+                <Slider disabled={!files.length}>
+                  {files.length ? (
+                    files.map((file, index) => (
+                      <div data-src={file.url} key={index} />
+                    ))
+                  ) : (
+                    <div data-src={noImage} />
+                  )}
+                </Slider>
               )}
 
               <Form>

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { usePubNub } from 'pubnub-react';
 
 import { Preview } from './styles';
+import noImage from '~/assets/no-image.png';
 
 export default function ChatItem({ currentChat, changeChat }) {
   const [chat, setChat] = useState({});
@@ -72,7 +73,7 @@ export default function ChatItem({ currentChat, changeChat }) {
     <>
       {chat.id && (
         <Preview>
-          <img src={chat.pet_avatar_url} alt="Perfil" />
+          <img src={chat.pet_avatar_url || noImage} alt="Perfil" />
 
           <div>
             <button
