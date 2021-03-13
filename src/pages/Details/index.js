@@ -60,10 +60,42 @@ export default function Details({ history, match }) {
     [match.params.id]
   );
 
+  async function handleSubmit() {
+    try {
+      setLoading(true);
+
+      const formData = new FormData();
+
+      formData.append('name', name);
+      formData.append('type', type);
+      formData.append('breed_id', breed);
+      formData.append('gender', gender);
+      formData.append('situation', situation);
+      formData.append('birth_date', birthDate);
+      formData.append('state', state);
+      formData.append('city', city);
+      formData.append('description', description);
+
+      if (firstImage) {
+        formData.append('file', firstImage);
+      }
+
+      await api.put(`/pets/${id.value}`, formData);
+
+      toast.success('Pet editado com sucesso!');
+      history.push('/my-pets');
+
+      setLoading(false);
+    } catch (err) {
+      getError(err);
+
+      setLoading(false);
+    }
+  }
+
   useEffect(() => {
     async function loadBreeds() {
       try {
-        setLoading(true);
         const { data } = await api.get('/breeds', {
           params: {
             type: type || 'dog',
@@ -75,7 +107,6 @@ export default function Details({ history, match }) {
         });
 
         setBreeds(breedsFormatted);
-        setLoading(false);
       } catch (err) {
         toast.error('Ocorreu um erro interno ao buscar as raças');
       }
@@ -89,8 +120,6 @@ export default function Details({ history, match }) {
       const { data } = await api.get(`pets/${id.value}`);
 
       setFirstImage(data.data.files[0]?.url);
-      setSecondImage(data.data.files[1]?.url);
-      setThirdImage(data.data.files[2]?.url);
 
       setUserId(data.data.user_id);
       setFiles(data.data.files);
@@ -187,16 +216,6 @@ export default function Details({ history, match }) {
                     image={firstImage}
                     setImage={setFirstImage}
                   />
-                  <ImageInput
-                    name="petImageSecond"
-                    image={secondImage}
-                    setImage={setSecondImage}
-                  />
-                  <ImageInput
-                    name="petImageThird"
-                    image={thirdImage}
-                    setImage={setThirdImage}
-                  />
                 </Images>
               ) : (
                 <Slider disabled={!files.length}>
@@ -210,7 +229,7 @@ export default function Details({ history, match }) {
                 </Slider>
               )}
 
-              <Form>
+              <Form onSubmit={handleSubmit}>
                 <Input
                   name="name"
                   label="nome do pet"
@@ -238,6 +257,9 @@ export default function Details({ history, match }) {
                     label="raça"
                     options={breeds}
                     value={breed}
+                    onChange={e => {
+                      setBreed(e.target.value);
+                    }}
                     disabled={!edit}
                   />
                 </div>

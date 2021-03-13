@@ -21,10 +21,12 @@ import getError from '~/services/getError';
 export default function AddPets() {
   const [breeds, setBreeds] = useState([]);
   const [type, setType] = useState('dog');
+  const [breed, setBreed] = useState('');
+  const [state, setState] = useState('PE');
+  const [city, setCity] = useState('recife');
+  const [situation, setSituation] = useState('mating');
 
   const [firstImage, setFirstImage] = useState(null);
-  const [secondImage, setSecondImage] = useState(null);
-  const [thirdImage, setThirdImage] = useState(null);
   const [gender, setGender] = useState('');
 
   const [loading, setLoading] = useState(false);
@@ -38,11 +40,12 @@ export default function AddPets() {
           },
         });
 
-        const breedsFormatted = data.data.map(breed => {
-          return { id: breed.id, title: breed.name };
+        const breedsFormatted = data.data.map(currentBreed => {
+          return { id: currentBreed.id, title: currentBreed.name };
         });
 
         setBreeds(breedsFormatted);
+        setBreed(breedsFormatted[0].id);
       } catch (err) {
         toast.error('Ocorreu um erro interno ao buscar as raças');
       }
@@ -57,25 +60,17 @@ export default function AddPets() {
       const formData = new FormData();
 
       formData.append('name', data.name);
-      formData.append('type', data.type);
-      formData.append('breed_id', data.breed);
+      formData.append('type', type);
+      formData.append('breed_id', breed);
       formData.append('gender', data.gender);
-      formData.append('situation', data.situation);
+      formData.append('situation', situation);
       formData.append('birth_date', data.birth_date);
-      formData.append('state', data.state);
-      formData.append('city', data.city);
+      formData.append('state', state);
+      formData.append('city', city);
       formData.append('description', data.description);
 
       if (firstImage) {
         formData.append('file', firstImage);
-      }
-
-      if (secondImage) {
-        formData.append('file', secondImage);
-      }
-
-      if (thirdImage) {
-        formData.append('file', thirdImage);
       }
 
       await api.post('/pets', formData);
@@ -107,8 +102,6 @@ export default function AddPets() {
       <Form onSubmit={handleSubmit}>
         <Images>
           <ImageInput name="petImageFirst" setImage={setFirstImage} />
-          <ImageInput name="petImageSecond" setImage={setSecondImage} />
-          <ImageInput name="petImageThird" setImage={setThirdImage} />
         </Images>
         <Input name="name" label="nome do pet" required />
         <div className="grid">
@@ -126,7 +119,16 @@ export default function AddPets() {
             required
           />
 
-          <Select name="breed" label="raça" options={breeds} required />
+          <Select
+            name="breed"
+            label="raça"
+            value={breed}
+            onChange={e => {
+              setBreed(e.target.value);
+            }}
+            options={breeds}
+            required
+          />
         </div>
         <Select
           name="situation"
@@ -136,18 +138,30 @@ export default function AddPets() {
             { id: 'adoption', title: 'adoção' },
             { id: 'disappeared', title: 'desaparecido' },
           ]}
+          value={situation}
+          onChange={e => {
+            setSituation(e.target.value);
+          }}
           required
         />
         <Select
           name="state"
           label="estados"
-          options={[{ id: 'PB', title: 'Pernambuco' }]}
+          options={[{ id: 'PE', title: 'Pernambuco' }]}
+          value={state}
+          onChange={e => {
+            setState(e.target.value);
+          }}
           required
         />
         <Select
           name="city"
           label="cidade"
           options={[{ id: 'recife', title: 'Recife' }]}
+          value={city}
+          onChange={e => {
+            setCity(e.target.value);
+          }}
           required
         />
         <div className="grid">
