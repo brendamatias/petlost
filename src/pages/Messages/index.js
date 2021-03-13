@@ -20,7 +20,6 @@ export default function Messages() {
     async function loadChat() {
       setLoading(true);
 
-      console.log(socket.connected);
       if (!socket.connected) {
         socket.connect();
       }
@@ -43,6 +42,7 @@ export default function Messages() {
             pet_avatar_url: currentChat.pet.files[0]?.url,
             user_name: currentUser.name,
             channel: `channel.${currentChat.pet_id}.${currentChat.sender_id}`,
+            active: currentChat.active,
           };
         });
 
@@ -88,6 +88,7 @@ export default function Messages() {
 
             {chat.channel ? (
               <Chat
+                active={chat.active}
                 channel={chat.channel}
                 user_name={chat.user_name}
                 pet_name={chat.pet_name}

@@ -91,13 +91,12 @@ export const NewMessage = styled.div`
     align-items: center;
 
     background: ${props => props.theme.colors.tertiary};
-    padding: 15px 20px;
     border-radius: 4px;
     margin-top: 30px;
 
     input {
       border: 0;
-      padding: 10px;
+      padding: 25px 20px;
       width: 80%;
       color: ${props => props.theme.colors.textPrimary};
     }
@@ -110,6 +109,11 @@ export const NewMessage = styled.div`
       height: 38px;
       padding: 0 25px;
       border-radius: 0 25px 25px;
+      margin-right: 20px;
+
+      &:disabled {
+        cursor: default;
+      }
     }
   }
 `;

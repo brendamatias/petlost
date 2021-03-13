@@ -71,6 +71,12 @@ export const Container = styled.div`
       }
     }
   }
+
+  .div-buttons {
+    button {
+      margin-left: 16px;
+    }
+  }
 `;
 
 export const Slider = styled(AwesomeSlider)`

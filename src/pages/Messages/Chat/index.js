@@ -17,7 +17,13 @@ import {
 import SecondaryLoading from '~/components/SecondaryLoading';
 import noImage from '~/assets/no-image.png';
 
-export default function Chat({ channel, pet_name, pet_avatar_url, user_name }) {
+export default function Chat({
+  active,
+  channel,
+  pet_name,
+  pet_avatar_url,
+  user_name,
+}) {
   const profile = useSelector(state => state.user.profile);
 
   const [newMessage, setNewMessage] = useState('');
@@ -146,7 +152,9 @@ export default function Chat({ channel, pet_name, pet_avatar_url, user_name }) {
       ) : (
         <>
           <Header>
-            <strong>{pet_name}</strong>
+            <strong>
+              {pet_name} {!active ? '<Pet Desabilitado>' : ''}
+            </strong>
             <span>de: {user_name}</span>
           </Header>
           <ChatContent>
@@ -178,8 +186,11 @@ export default function Chat({ channel, pet_name, pet_avatar_url, user_name }) {
                   placeholder="digite uma mensagem..."
                   value={newMessage}
                   onChange={event => setNewMessage(event.target.value)}
+                  disabled={!active}
                 />
-                <button type="submit">enviar</button>
+                <button type="submit" disabled={!active}>
+                  enviar
+                </button>
               </Form>
             </NewMessage>
           </ChatContent>
@@ -190,6 +201,7 @@ export default function Chat({ channel, pet_name, pet_avatar_url, user_name }) {
 }
 
 Chat.propTypes = {
+  active: PropTypes.bool.isRequired,
   channel: PropTypes.string.isRequired,
   pet_name: PropTypes.string.isRequired,
   pet_avatar_url: PropTypes.string,

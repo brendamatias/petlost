@@ -38,8 +38,6 @@ export default function Details({ history, match }) {
 
   const [message, setMessage] = useState('');
   const [firstImage, setFirstImage] = useState(null);
-  const [secondImage, setSecondImage] = useState(null);
-  const [thirdImage, setThirdImage] = useState(null);
 
   const [files, setFiles] = useState([]);
   const [userId, setUserId] = useState('');
@@ -152,6 +150,19 @@ export default function Details({ history, match }) {
     }
   }
 
+  async function disablePet() {
+    try {
+      await api.delete(`pets/${id.value}`);
+
+      toast.success('Pet desativado com sucesso!');
+      history.push('/my-pets');
+    } catch (err) {
+      getError(err);
+
+      setLoading(false);
+    }
+  }
+
   return (
     <>
       {!loading ? (
@@ -191,13 +202,16 @@ export default function Details({ history, match }) {
               </div>
 
               {profile.id === userId ? (
-                <Button
-                  className={edit ? 'edit' : ''}
-                  onClick={() => setEdit(!edit)}
-                  background={!edit ? '#2A54DE' : ''}
-                >
-                  {edit ? 'cancelar' : 'editar pet'}
-                </Button>
+                <div className="div-buttons">
+                  <Button
+                    className={edit ? 'edit' : ''}
+                    onClick={() => setEdit(!edit)}
+                    background={!edit ? '#2A54DE' : ''}
+                  >
+                    {edit ? 'cancelar' : 'editar pet'}
+                  </Button>
+                  <Button onClick={() => disablePet()}>desativar</Button>
+                </div>
               ) : (
                 <Button
                   background="#2A54DE"
